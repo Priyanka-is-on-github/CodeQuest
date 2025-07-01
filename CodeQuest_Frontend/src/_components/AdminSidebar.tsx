@@ -1,10 +1,11 @@
+import { useAuth } from '@/context/AuthProvider';
 import { Home, Layout, LogOut, Settings, TabletSmartphone, User2Icon } from 'lucide-react';
 
 import { IoNotifications } from 'react-icons/io5';
 import { MdQuestionAnswer } from 'react-icons/md';
 
 import { PiQuestionMarkThin } from 'react-icons/pi';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const routes = [
 
@@ -17,7 +18,7 @@ const routes = [
     {
       label: "Admin Dashboard",
       icon: <Layout />,
-      link: "/admin",
+      link: "/admin/dashboard",
     },
     {
       label: "Interships Management",
@@ -35,24 +36,27 @@ const routes = [
     {
       label: "Notification",
       icon: <IoNotifications />,
-      link: "/dashboard",
+      link: "",
     },
   
     {
       icon: <Settings />,
       label: "Settings",
-      link: "/search",
+      link: "",
     },
-    {
-    icon: <LogOut />,
-    label: "Log out",
-    link: "/",
-  },
+    
    
   ];
   
 function AdminSidebar() {
     const { pathname } = useLocation();
+     const navigate = useNavigate();
+  const { signout } = useAuth(); // Get signout function from your auth context
+
+  const handleLogout = () => {
+    signout(); // Call your logout function
+    navigate("/"); // Redirect to home page
+  };
 
     return (
      <div className="border-r overflow-y-auto bg-gradient-to-b from-gray-900 to-gray-800 h-full hidden md:flex w-60 flex-col fixed inset-y-0 z-50 shadow-xl">
@@ -80,6 +84,18 @@ function AdminSidebar() {
              </div>
            </Link>
          ))}
+
+         {/* Logout button with click handler */}
+                 <button
+                   onClick={handleLogout}
+                   className="flex items-center gap-x-3 text-gray-300 text-sm font-medium pl-6 py-4 transition-all 
+                   hover:text-white hover:bg-gray-700/50 w-full text-left"
+                 >
+                   <div className="flex items-center gap-x-2">
+                     <span className="text-lg"><LogOut /></span>
+                     <span>Logout</span>
+                   </div>
+                 </button>
        </div>
      </div>
       );

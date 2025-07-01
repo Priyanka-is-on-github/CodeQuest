@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const UserModel = require("../models/user");
+const DeveloperModel = require("../models/Developer");
 const jwt = require('jsonwebtoken')
 
 
@@ -10,19 +10,39 @@ const jwt = require('jsonwebtoken')
 // jwt.sign(payload, secret, { expiresIn: '2d' });   // 2 days
 // jwt.sign(payload, secret, { expiresIn: 60 });     // 60 seconds
 
-const signup = async (req, res) => {
-  const { name, email, password, degree, role } = req.body;
+const Developersignup = async (req, res) => {
+ 
 
   //   hash the password
-  const saltRound = 10;
-  const hash_password = await bcrypt.hash(password, saltRound);
+  // const saltRound = 10;
+  // const hash_password = await bcrypt.hash(password, saltRound);
+
+  
   try {
+
+ const { name, email, password, degree, role, collegeName, adharNumber } = req.body;
+    
+      const userExist = await DeveloperModel.findOne({ email });
+    
+      if (userExist) {
+        return res
+          .status(409)
+          .json({ msg: "email already exists you can login", success: false });
+      }
+
+
+      const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
     const user = await UserModel.create({
       name,
       email,
       password,
       degree,
       role,
+      collegeName,
+      adharNumber,
+      verificationCode,
+
+
     });
 
     // const token = setUser({ email, password });
@@ -34,7 +54,7 @@ const signup = async (req, res) => {
     //   sameSite: "lax",
     // }); // Cookie name is 'authToken'
 
-    return res.status(201).json({ msg: "user created", success: true });
+    return res.status(201).json({ msg: "user created", success: true, user });
   } catch (error) {
     console.log(error);
 
@@ -43,7 +63,7 @@ const signup = async (req, res) => {
       .json({ msg: "Internal server error", success: false });
   }
 };
-const signin = async (req, res) => {
+const Developersignin = async (req, res) => {
   const { password } = req.body;
 const user = req.user; // From middleware
  
@@ -96,6 +116,6 @@ if(!isPassEqual)
 };
 
 module.exports = {
-  signup,
-  signin
+  Developersignin,
+  Developersignup
 };

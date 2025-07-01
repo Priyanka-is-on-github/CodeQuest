@@ -7,7 +7,7 @@ function Compete() {
   return (
     <Layout>
   {/* Hero Section */}
-  <section className="relative bg-gradient-to-r from-blue-50 to-indigo-50 py-16">
+  <section className="relative bg-gradient-to-r from-blue-50 to-indigo-50 py-20">
     <div className="container mx-auto px-6">
       <div className="text-center max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -82,7 +82,7 @@ function Compete() {
                 </svg>
                 Ends in: <span className="font-medium ml-1">{internship.time}</span>
               </div>
-              <Link to='/compete/information'>
+              <Link to='/compete/internship'>
               
               <button className={`w-full py-2 px-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-md`}>
                 Start Challenge

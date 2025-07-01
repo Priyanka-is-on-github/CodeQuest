@@ -4,7 +4,7 @@ const { setUser } = require("../service/auth");
 
 const router = express.Router();
 const UserModel = require("../models/user");
-const { signupValidation, signinValidation } = require("../middlewares/AuthValidation");
+const { signupValidation, signinValidation } = require("../middlewares/Email.config");
 const { signup, signin } = require("../controllers/AuthController");
 
 

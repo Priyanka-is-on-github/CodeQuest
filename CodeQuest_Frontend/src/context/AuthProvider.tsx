@@ -1,5 +1,5 @@
 import { clearAuthData, isTokenExpired } from '@/utils/authUtils';
-import  { createContext, ReactNode, useContext, useState } from 'react'
+import  { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react'
 import { boolean } from 'yup';
 
 interface AuthContextType{
@@ -7,12 +7,16 @@ user:any,
 signin:(userData:any, token:string)=>void,
 signout:()=>void,
 checkAuth:()=>boolean
+ selectedRole:string | null,
+  setSelectedRole:Dispatch<SetStateAction<string| null>>,
 }
 const AuthContext = createContext<AuthContextType>({
   user:null,
   signin:()=>{},
   signout:()=>{},
-  checkAuth:()=>{return false}
+  checkAuth:()=>{return false},
+  selectedRole:'',
+  setSelectedRole:()=>{},
 });
 
 function AuthProvider({children}:{children: ReactNode}) {
@@ -21,6 +25,9 @@ function AuthProvider({children}:{children: ReactNode}) {
     const storedUser = localStorage.getItem("pos-user")
     return storedUser ? JSON.parse(storedUser) : null
   })
+
+  const selectedRolefromlocalStorage =localStorage.getItem('role') 
+    const [selectedRole, setSelectedRole] = useState(!selectedRolefromlocalStorage? '': selectedRolefromlocalStorage);
 
   const signin =(userData:any, token:string)=>{
     if (isTokenExpired(token)) {
@@ -51,7 +58,7 @@ const checkAuth = () => {
   }
 
   return (
-   <AuthContext.Provider value={{user, signin, signout, checkAuth}}>
+   <AuthContext.Provider value={{user, signin, signout, checkAuth, selectedRole, setSelectedRole }}>
 {children}
    </AuthContext.Provider>
 

@@ -1,36 +1,55 @@
 import { useFormik } from "formik";
 import { Button } from "@/components/ui/button";
-import SignupSchema from "./schema";
+import DeveloperSignupSchema from "./schema/DeveloperSignupSchema";
 import { IoPersonOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { MdOutlineMail } from "react-icons/md";
 import { LiaGraduationCapSolid } from "react-icons/lia";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { UserRound } from "lucide-react";
-import { useState } from "react";
+import { HomeIcon, UniversityIcon, UserRound } from "lucide-react";
+import { useEffect, useState } from "react";
+
+import { useAuth } from "@/context/AuthProvider";
+import { FaIdCard } from "react-icons/fa";
+
 
 const initialValues = {
   name: "",
   email: "",
   password: "",
-  role: "",
+  college:'',
+   role: "",
+
   degree: "",
+  adharnumber:"",
+ 
 };
 
-function SignupUser() {
+function RecruiterSignup() {
+  const {selectedRole} = useAuth()
   const navigate = useNavigate();
+
+
+
+
+ 
     const [isSubmitting, setIsSubmitting] = useState(false);
   const { values, errors, touched, handleBlur, handleChange, handleSubmit,  isValid,
     dirty, } =
     useFormik({
       initialValues,
-      validationSchema: SignupSchema,
+      validationSchema: DeveloperSignupSchema,
       onSubmit: (values, action) => {
         
         action.resetForm();
       },
     });
+
+    console.log('v=', isValid, dirty)
+    
+
+    const userValues = {...values, role:selectedRole}
 
   const handleRegister = async () => {
     setIsSubmitting(true);
@@ -40,7 +59,7 @@ function SignupUser() {
         headers: {
           'Content-type': 'application/json'
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(userValues)
       });
 
       const jsondata = await registeredUser.json();
@@ -62,29 +81,50 @@ function SignupUser() {
     }
   };
 
+  useEffect(()=>{
+    if(selectedRole === ''){
+  navigate('/authorize')
+}
+  }, [selectedRole])
+
+
+
   return (
     <div className="flex min-h-screen ">
      {/* Left Side - Image */}
       <div className="md:w-1/2 bg-blue-50 flex items-center justify-center p-8">
         <img 
-          src="./boy.jpg" 
-          alt="Registration" 
+          src='/boy.jpg' 
+          alt="boyImage" 
           className="max-h-full max-w-full object-contain rounded-lg shadow-xl"
         />
       </div>
 
        {/* Right Side - Form */}
+
+
+
       <div className="md:w-1/2 flex items-center justify-center p-6 ">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
               Join <span className="text-blue-600">CodeQuest</span>
             </h1>
-            <p className="text-gray-500">
-              Start your coding journey with us
-            </p>
+            
+               
+            
+            
+           <p className="text-gray-500">
+               Discover top tech talent
+            </p> 
+            
+            
           </div>
 
+
+
+
+    
           <form onSubmit={handleSubmit} className="space-y-4  flex flex-col items-center">
             <div className=" w-[27vw] ">
               <div className={`flex border-2 ${errors.name && touched.name ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
@@ -145,24 +185,25 @@ function SignupUser() {
                 <p className="text-sm text-red-600 mt-1 ml-2">{errors.password}</p>
               )}
             </div>
+            
 
             <div className="mb-6 w-[27vw]">
-              <div className={`flex border-2 ${errors.role && touched.role ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
-                <UserRound className="h-6 w-6 text-slate-500" />
+              <div className={`flex border-2 ${errors.college && touched.college ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
+                <UniversityIcon className="h-6 w-6 text-slate-500" />
                 <input
                   type="text"
                   autoComplete="off"
-                  name="role"
-                  id="role"
-                  placeholder="e.g, User, admin"
-                  value={values.role}
+                  name="college"
+                  id="college"
+                  placeholder="College or University name"
+                  value={values.college}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className="pl-3 outline-none bg-transparent w-full"
                 />
               </div>
-              {errors.role && touched.role && (
-                <p className="text-sm text-red-600 mt-1 ml-2">{errors.role}</p>
+              {errors.college && touched.college && (
+                <p className="text-sm text-red-600 mt-1 ml-2">{errors.college}</p>
               )}
             </div>
 
@@ -185,6 +226,26 @@ function SignupUser() {
                 <p className="text-sm text-red-600 mt-1 ml-2">{errors.degree}</p>
               )}
             </div>
+
+            <div className="mb-6 w-[27vw]">
+              <div className={`flex border-2 ${errors.adharnumber && touched.adharnumber ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
+                <FaIdCard className="h-6 w-6 text-slate-500" />
+                <input
+                  type="adharnumber"
+                  autoComplete="off"
+                  name="adharnumber"
+                  id="adharnumber"
+                  placeholder="Enter your Aadhar number"
+                  value={values.adharnumber}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className="pl-3 outline-none bg-transparent w-full"
+                />
+              </div>
+              {errors.adharnumber && touched.adharnumber && (
+                <p className="text-sm text-red-600 mt-1 ml-2">{errors.adharnumber}</p>
+              )}
+            </div> 
 
             <div className="pt-4">
               <Button
@@ -210,16 +271,22 @@ function SignupUser() {
             <div className="text-center">
               <p className="text-gray-600 text-sm">
                 Already have an account?{" "}
-                <Link to="/signin" className="text-blue-600 font-medium hover:underline">
+                <Link to={`/signin/${selectedRole}`} className="text-blue-600 font-medium hover:underline">
                   Sign In now
                 </Link>
               </p>
             </div>
           </form>
+ 
+
+
+    
+         
+  
         </div>
       </div>
     </div>
   );
 }
 
-export default SignupUser;
+export default RecruiterSignup;

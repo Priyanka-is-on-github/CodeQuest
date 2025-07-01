@@ -1,10 +1,11 @@
 {
-  "name": "test_management_system_backend",
+  "name": "codequest_backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generateDoc": "node swagger.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,7 +16,12 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.4",
+    "nodemailer": "^7.0.4",
     "nodemon": "^3.1.7",
-    "react-hot-toast": "^2.4.1"
+    "react-hot-toast": "^2.4.1",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "swagger-autogen": "^2.23.7"
   }
 }

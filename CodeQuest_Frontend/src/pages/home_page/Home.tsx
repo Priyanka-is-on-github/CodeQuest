@@ -14,20 +14,21 @@ function Home() {
     {/* Text Content */}
     <div className="lg:w-1/2 z-10">
       <h2 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-          Prove Your Skills.
-        </span>
-        <br />
-        <span className="text-gray-800">Secure Your Internship.</span>
-      </h2>
-      
-      <p className="mt-6 text-xl text-gray-600 max-w-lg">
-       Join the platform that connects talent with opportunity.
-      </p>
-      
+  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+    Where Talent Meets Opportunity
+  </span>
+  <br />
+  <span className="text-gray-800">
+    Through Real Coding Challenges
+  </span>
+</h2>
+
+<p className="mt-6 text-xl text-gray-600 max-w-lg">
+  Developers prove their skills • Companies discover top talent
+</p>
       <div className="flex flex-col sm:flex-row gap-4 mt-10">
         <Link 
-          to="/signup"
+          to="/compete"
           className="relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-semibold text-white transition-all duration-300 ease-in-out rounded-lg shadow-lg group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
         >
           <span className="relative z-10">Get Started Now</span>

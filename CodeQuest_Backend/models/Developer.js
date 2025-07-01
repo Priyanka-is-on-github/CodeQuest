@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
 
-const userSchema = new mongoose.Schema({
+const DeveloperSchema = new mongoose.Schema({
 
     name:{
         type:String,
@@ -23,17 +23,31 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type:String,
-        enum:["admin", "user"],
+        enum:["recruiter", "developer"],
         default:"user",
         required:true
-    }
+    },
+    collegeName:{
+        type:String,
+        required:true,
+    },
+    adharNumber:{
+        type:String,
+        required:true,
+    },
+    isVerified:{
+        type:Boolean,
+        default:false,
+
+    },
+    verficationCode:String
 },
 {timestamps:true}
 
 )
 
 // hash password midleware
-userSchema.pre('save', async function(next){
+DeveloperSchema.pre('save', async function(next){
     //console.log('pre method', this)
 
     const user = this
@@ -49,5 +63,5 @@ userSchema.pre('save', async function(next){
         next(error)
     }
 })
-const UserModel = mongoose.model("user", userSchema)
-module.exports = UserModel;
+const DeveloperModel = mongoose.model("user", DeveloperSchema)
+module.exports = DeveloperModel;

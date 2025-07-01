@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {toast} from 'react-hot-toast'
 import { useAuth } from '@/context/AuthProvider'
 
 function Navbar() {
 const {user, signout} = useAuth()
+const { pathname } = useLocation();
 // Calculate roles once during render
   const isAdmin = user?.role === 'admin';
   const isUser = user?.role === 'user';
-
+const {selectedRole} = useAuth()
 
   const navigate = useNavigate()
   const handleLogout = async () => {
@@ -34,44 +35,50 @@ const {user, signout} = useAuth()
    <nav className="hidden md:flex items-center space-x-8 ">
         <Link 
           to="/" 
-          className="relative group font-medium text-gray-300 hover:text-white transition-colors duration-300"
+          className={`${pathname === '/'?"relative group font-medium text-white" :  "relative group font-medium text-gray-300 hover:text-white transition-colors duration-300"}`}
         >
           Home
-          <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
+          <span className={`${pathname === '/'? "absolute left-0 -bottom-1  h-0.5 bg-blue-500 w-full ": "absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"}`}></span>
         </Link>
-        
-        <Link 
+        {
+          isUser && (
+ <Link 
           to="/compete" 
-          className="relative group font-medium text-gray-300 hover:text-white transition-colors duration-300"
+          className={`${pathname === '/compete'?"relative group font-medium text-white" :  "relative group font-medium text-gray-300 hover:text-white transition-colors duration-300"}`}
         >
           Compete
-          <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
+          <span className={`${pathname === '/compete'? "absolute left-0 -bottom-1  h-0.5 bg-blue-500 w-full ": "absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"}`}></span>
         </Link>
+          )
+        }
+       
 
         {/* Conditional Links */}
         {isUser && !isAdmin && (
+          <>
+          
           <Link 
             to="/user/dashboard" 
-            className="relative group font-medium text-gray-300 hover:text-white transition-colors duration-300"
+            className={`${pathname === '/user/dashboard'?"relative group font-medium text-white" :  "relative group font-medium text-gray-300 hover:text-white transition-colors duration-300"}`}
           >
             Dashboard
-            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
-          </Link>
+            <span className={`${pathname === '/user/dashboard'? "absolute left-0 -bottom-1  h-0.5 bg-blue-500 w-full ": "absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"}`}></span>
+          </Link></>
         )}
 
         {isAdmin && (
           <Link 
             to="/admin/dashboard" 
-            className="relative group font-medium text-gray-300 hover:text-white transition-colors duration-300"
+            className={`${pathname === '/admin/dashboard'?"relative group font-medium text-white" :  "relative group font-medium text-gray-300 hover:text-white transition-colors duration-300"}`}
           >
             Admin Panel
-            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
+            <span className={`${pathname === '/admin/dashboard'? "absolute left-0 -bottom-1  h-0.5 bg-blue-500 w-full ": "absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"}`}></span>
           </Link>
         )}
 
         {/* Auth Buttons */}
         <div className="flex items-center space-x-4 ml-4">
-          {!isUser ? (
+          {!isUser && !isAdmin? (
             <>
              <Link 
                 to="/signin" 
@@ -79,12 +86,21 @@ const {user, signout} = useAuth()
               >
                 Signin
               </Link>
-              <Link 
-                to="/signup" 
+              {
+                selectedRole === ''
+                 ? (<Link 
+                to="/authorize" 
                 className="px-4 py-2 rounded-md font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
               >
                 Signup
-              </Link>
+              </Link>):(<Link 
+                to={`signup/${selectedRole}` }
+                className="px-4 py-2 rounded-md font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              >
+                Signup
+              </Link>)
+              }
+              
              
             </>
           ) : (

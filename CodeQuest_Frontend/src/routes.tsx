@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Error from "./pages/error_page";
 import Home from "./pages/home_page/Home";
-import RegisterUser from "./pages/register_page/SignupUser";
+
 
 import Dashboard from "./pages/user_dashboard_page/Dashboard";
 import Admin from "./pages/admin_page/AdminDashboard";
@@ -18,9 +18,11 @@ import ProblemPage from "./pages/user_dashboard_page/ProblemPage";
 import AdminDashboard from "./pages/admin_page/AdminDashboard";
 import IntershipManagement from "./pages/intership_management";
 import SigninUser from "./pages/signin_page/SigninUser";
-import SignupUser from "./pages/register_page/SignupUser";
+import DeveloperSignup from "./pages/register_page/DeveloperSignup";
 import Unauthorised from "./pages/unauthorized_page";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
+import InternshipInfoPage from "./pages/compete_page/InternshipInfoPage";
+import Authentication from "./pages/authentication";
 
 
 const router = createBrowserRouter([
@@ -30,12 +32,17 @@ const router = createBrowserRouter([
       errorElement: <Error />,
     },
     {
-      path: "/signup",
-      element: <SignupUser/>,
+      path: "/authorize",
+      element: <Authentication/>,
       errorElement: <Error />,
     },
     {
-      path: "/signin",
+      path: "/signup/:selectedRole",
+      element: <DeveloperSignup/>,
+      errorElement: <Error />,
+    },
+    {
+      path: "/signin/:selectedRole",
       element: <SigninUser/>,
       errorElement: <Error />,
     },
@@ -70,7 +77,12 @@ const router = createBrowserRouter([
       errorElement: <Error />,
     },
     {
-      path: "/compete/information",
+      path: "/compete/internship",
+      element: <InternshipInfoPage/>,
+      errorElement: <Error />,
+    },
+    {
+      path: "/compete/internship/information",
       element: <InformationPage/>,
       errorElement: <Error />,
     },

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { MdOutlineMail } from "react-icons/md";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import { useState } from "react";
@@ -24,6 +24,8 @@ function SignupUser() {
  
   const {signin} = useAuth();
   const navigate = useNavigate();
+  const {selectedRole} = useAuth()
+  const location = useLocation()
     const [isSubmitting, setIsSubmitting] = useState(false);
   const { values, errors, touched, handleBlur, handleChange, handleSubmit,  isValid,
     dirty, } =
@@ -65,10 +67,12 @@ signin(data.user, data.token)
 toast.success('Signin Successfull!')
 
 // Role-based redirection
-const redirectPath = data.user.role === 'admin' ? '/admin/dashboard': '/user/dashboard'
-navigate(redirectPath)
 
-        
+
+ const redirectPath= location?.state?.from || (data.user.role === 'admin'? '/admin/dashboard': '/user/dashboard');
+
+
+navigate(redirectPath, {replace:true})  
 
       } catch (error:any) {
       console.error('Login Error:', error);
@@ -87,8 +91,8 @@ navigate(redirectPath)
      {/* Left Side - Image */}
       <div className="md:w-1/2 bg-blue-50 flex items-center justify-center p-8">
         <img 
-          src="./boy.jpg" 
-          alt="Registration" 
+          src="/boy.jpg" 
+          alt="boyImage" 
           className="max-h-full max-w-full object-contain rounded-lg shadow-xl"
         />
       </div>
@@ -100,9 +104,11 @@ navigate(redirectPath)
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
               Welcome back to <span className="text-blue-600">CodeQuest!</span>
             </h1>
-            <p className="text-gray-500">
-            Signin by entering the information below
+            
+               <p className="text-gray-500">
+             Land your dream Internship
             </p>
+            
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4  flex flex-col items-center">
@@ -176,7 +182,7 @@ navigate(redirectPath)
             <div className="text-center">
               <p className="text-gray-600 text-sm ">
                 New user 
-                <Link to="/signup" className="text-blue-600 font-medium ml-2 hover:underline">
+                <Link to={`/authorize`} className="text-blue-600 font-medium ml-2 hover:underline">
                    Signup
                 </Link>
               </p>
