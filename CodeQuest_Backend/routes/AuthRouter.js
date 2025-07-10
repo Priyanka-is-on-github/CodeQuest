@@ -3,15 +3,16 @@ const bcrypt = require("bcrypt");
 const { setUser } = require("../service/auth");
 
 const router = express.Router();
-const UserModel = require("../models/user");
+const UserModel = require("../models/Developer");
 const { signupValidation, signinValidation } = require("../middlewares/Email.config");
-const { signup, signin } = require("../controllers/AuthController");
+const { Developersignup, Developersignin, VerifyEmail } = require("../controllers/AuthController");
 
+const AuthRoutes=express.Router()
 
+AuthRoutes.post('/signup', Developersignup)
+AuthRoutes.post('/verifyemail', VerifyEmail)
 
-router.post('/signup', signupValidation, signup)
-
-router.post('/signin', signinValidation, signin)
+router.post('/signin', signinValidation, Developersignin)
 
 
 // router.post("/login", async (req, res) => {

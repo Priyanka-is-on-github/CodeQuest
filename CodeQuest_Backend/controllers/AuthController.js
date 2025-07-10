@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const DeveloperModel = require("../models/Developer");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { SendVerificationCode, WelcomeEmail } = require("../middlewares/Email");
 
 
 
@@ -45,16 +46,12 @@ const Developersignup = async (req, res) => {
 
     });
 
-    // const token = setUser({ email, password });
-    // console.log("t=", token);
-    // res.cookie("authToken", token, {
-    //   httpOnly: true,
-    //   maxAge: 3600000,
-    //   secure: false,
-    //   sameSite: "lax",
-    // }); // Cookie name is 'authToken'
+    await user.save();
+    SendVerificationCode(user.email, verificationCode)
 
     return res.status(201).json({ msg: "user created", success: true, user });
+
+
   } catch (error) {
     console.log(error);
 
@@ -115,7 +112,34 @@ if(!isPassEqual)
   }
 };
 
+
+
+const VerifyEmail = async(req, res)=>{
+  try {
+    const {code} = req.body;
+    const user = await UserModel.findOne({
+      verificationCode:code
+    })
+
+    if(!user){
+      return res.status(400).json({success:false, message:"Invalid or Expired code"})
+    }
+
+    user.isVerified =  true;
+    user.verificationCode=undefined;
+    await user.save()
+    await WelcomeEmail(user.email, user.name)
+
+return res.status(200).json({success:true, message:"Email verified successfully"})
+
+  } catch (error) {
+     return res
+      .status(500)
+      .json({ msg: "Internal server error", success: false });
+  }
+}
 module.exports = {
   Developersignin,
-  Developersignup
+  Developersignup,
+  VerifyEmail
 };
