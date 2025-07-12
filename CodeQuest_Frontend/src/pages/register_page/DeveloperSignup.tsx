@@ -18,11 +18,9 @@ const initialValues = {
   name: "",
   email: "",
   password: "",
-  college:'',
-   role: "",
-
+  collegeName:'',
   degree: "",
-  adharnumber:"",
+  adharNumber:"",
  
 };
 
@@ -46,10 +44,11 @@ function DeveloperSignup() {
       },
     });
 
-    console.log('v=', isValid, dirty)
+
     
 
     const userValues = {...values, role:selectedRole}
+  
 
   const handleRegister = async () => {
     setIsSubmitting(true);
@@ -64,13 +63,20 @@ function DeveloperSignup() {
 
       const jsondata = await registeredUser.json();
 
+      
+      if(jsondata.msg === 'Verify your Email')
+      {
+        toast.success("Verify your Email!")
+        navigate('/signup/otpverification')
+      }
+
       if (jsondata.msg === 'email already exists you can login') {
         toast.error('Email already exists you can login');
        
       } else {
-        toast.success('Your account has been created!');
+       
      
-        navigate('/signin');
+        navigate('/signup/otpverification');
       }
     } catch (error) {
       console.log(error);
@@ -188,7 +194,7 @@ function DeveloperSignup() {
             
 
             <div className="mb-6 w-[27vw]">
-              <div className={`flex border-2 ${errors.college && touched.college ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
+              <div className={`flex border-2 ${errors.collegeName && touched.collegeName ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
                 <UniversityIcon className="h-6 w-6 text-slate-500" />
                 <input
                   type="text"
@@ -196,14 +202,14 @@ function DeveloperSignup() {
                   name="college"
                   id="college"
                   placeholder="College or University name"
-                  value={values.college}
+                  value={values.collegeName}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className="pl-3 outline-none bg-transparent w-full"
                 />
               </div>
-              {errors.college && touched.college && (
-                <p className="text-sm text-red-600 mt-1 ml-2">{errors.college}</p>
+              {errors.collegeName && touched.collegeName && (
+                <p className="text-sm text-red-600 mt-1 ml-2">{errors.collegeName}</p>
               )}
             </div>
 
@@ -228,7 +234,7 @@ function DeveloperSignup() {
             </div>
 
             <div className="mb-6 w-[27vw]">
-              <div className={`flex border-2 ${errors.adharnumber && touched.adharnumber ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
+              <div className={`flex border-2 ${errors.adharNumber && touched.adharNumber ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
                 <FaIdCard className="h-6 w-6 text-slate-500" />
                 <input
                   type="adharnumber"
@@ -236,14 +242,14 @@ function DeveloperSignup() {
                   name="adharnumber"
                   id="adharnumber"
                   placeholder="Enter your Aadhar number"
-                  value={values.adharnumber}
+                  value={values.adharNumber}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className="pl-3 outline-none bg-transparent w-full"
                 />
               </div>
-              {errors.adharnumber && touched.adharnumber && (
-                <p className="text-sm text-red-600 mt-1 ml-2">{errors.adharnumber}</p>
+              {errors.adharNumber && touched.adharNumber && (
+                <p className="text-sm text-red-600 mt-1 ml-2">{errors.adharNumber}</p>
               )}
             </div> 
 

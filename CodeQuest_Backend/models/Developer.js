@@ -63,5 +63,5 @@ DeveloperSchema.pre('save', async function(next){
         next(error)
     }
 })
-const DeveloperModel = mongoose.model("user", DeveloperSchema)
+const DeveloperModel = mongoose.model("Developer", DeveloperSchema)
 module.exports = DeveloperModel;

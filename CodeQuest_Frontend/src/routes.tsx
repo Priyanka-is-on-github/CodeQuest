@@ -23,6 +23,7 @@ import Unauthorised from "./pages/unauthorized_page";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import InternshipInfoPage from "./pages/compete_page/InternshipInfoPage";
 import Authentication from "./pages/authentication";
+import OTPVerificationPage from "./pages/register_page/OTPVerificationPage";
 
 
 const router = createBrowserRouter([
@@ -39,6 +40,11 @@ const router = createBrowserRouter([
     {
       path: "/signup/:selectedRole",
       element: <DeveloperSignup/>,
+      errorElement: <Error />,
+    },
+    {
+      path: "/signup/otpverification",
+      element: <OTPVerificationPage/>,
       errorElement: <Error />,
     },
     {

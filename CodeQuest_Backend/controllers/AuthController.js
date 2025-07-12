@@ -25,7 +25,13 @@ const Developersignup = async (req, res) => {
     
       const userExist = await DeveloperModel.findOne({ email });
     
+      if(userExist && !userExist.isVerified)
+      {
+        return res.status(401).json({msg:"Verify your Email", success:false})
+      }
+
       if (userExist) {
+
         return res
           .status(409)
           .json({ msg: "email already exists you can login", success: false });
@@ -33,7 +39,7 @@ const Developersignup = async (req, res) => {
 
 
       const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
-    const user = await UserModel.create({
+    const user = await DeveloperModel.create({
       name,
       email,
       password,
@@ -47,7 +53,7 @@ const Developersignup = async (req, res) => {
     });
 
     await user.save();
-    SendVerificationCode(user.email, verificationCode)
+   await SendVerificationCode(user.email, verificationCode)
 
     return res.status(201).json({ msg: "user created", success: true, user });
 
@@ -117,11 +123,14 @@ if(!isPassEqual)
 const VerifyEmail = async(req, res)=>{
   try {
     const {code} = req.body;
-    const user = await UserModel.findOne({
+    const user = await DeveloperModel.findOne({
       verificationCode:code
     })
 
     if(!user){
+      // await UserModel.deleteOne({
+      //   email
+      // })
       return res.status(400).json({success:false, message:"Invalid or Expired code"})
     }
 
@@ -138,8 +147,34 @@ return res.status(200).json({success:true, message:"Email verified successfully"
       .json({ msg: "Internal server error", success: false });
   }
 }
+
+const ResendVerificationCode = async(req, res)=>{
+
+try {
+  
+  const {email} = req.body;
+
+  const code = Math.floor(100000 + Math.random() * 900000).toString()
+    const user = await DeveloperModel.update({
+      email,
+      verificationCode:code,
+
+
+    });
+
+    await user.save();
+    SendVerificationCode(user.email, code)
+
+    return res.status(200).json({ msg: "code sended succesfully", success: true, user });
+
+ } catch (error) {
+   return res.status(500).json({ msg: "Internal server error", success: false });
+}
+}
+
 module.exports = {
   Developersignin,
   Developersignup,
-  VerifyEmail
+  VerifyEmail,
+  ResendVerificationCode,
 };

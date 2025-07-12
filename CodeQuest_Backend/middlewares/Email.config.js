@@ -3,7 +3,7 @@ const DeveloperModel = require("../models/Developer");
 const nodemailer = require("nodemailer");
 
 // Create a test account or replace with real credentials.
-export const transporter = nodemailer.createTransport({
+ const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
   secure: false, // true for 465, false for other ports
@@ -12,6 +12,7 @@ export const transporter = nodemailer.createTransport({
     pass: "steq djex woax tvec",
   },
 });
+module.exports = transporter
 
 
 
@@ -55,4 +56,4 @@ async function signinValidation(req, res, next) {
  
 }
 
-module.exports = {  signinValidation };
+module.exports = {  signinValidation, transporter };

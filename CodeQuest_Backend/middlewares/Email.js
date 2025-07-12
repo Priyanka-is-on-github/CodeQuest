@@ -1,8 +1,8 @@
 
-import { Verification_Email_Template, Welcome_Email_Template } from '../libs/EmailTemplates';
-import {transporter} from './Email.config'
+const { Verification_Email_Template, Welcome_Email_Template } = require( '../libs/EmailTemplates');
+const transporter = require('./Email.config')
 
-export const SendVerificationCode = async(email, verificationCode)=>{
+ const SendVerificationCode = async(email, verificationCode)=>{
 
     try {
          const response = await transporter.sendMail({
@@ -18,7 +18,7 @@ export const SendVerificationCode = async(email, verificationCode)=>{
         console.log("Email error")
     }
 }
-export const WelcomeEmail = async(email, name)=>{
+ const WelcomeEmail = async(email, name)=>{
 
     try {
          const response = await transporter.sendMail({
@@ -34,5 +34,6 @@ export const WelcomeEmail = async(email, name)=>{
         console.log("Email error")
     }
 }
+module.exports = {SendVerificationCode, WelcomeEmail}
 
 

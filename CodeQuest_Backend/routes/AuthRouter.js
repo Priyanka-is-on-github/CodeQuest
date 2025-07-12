@@ -5,12 +5,13 @@ const { setUser } = require("../service/auth");
 const router = express.Router();
 const UserModel = require("../models/Developer");
 const { signupValidation, signinValidation } = require("../middlewares/Email.config");
-const { Developersignup, Developersignin, VerifyEmail } = require("../controllers/AuthController");
+const { Developersignup, Developersignin, VerifyEmail, ResendVerificationCode } = require("../controllers/AuthController");
 
 const AuthRoutes=express.Router()
 
-AuthRoutes.post('/signup', Developersignup)
-AuthRoutes.post('/verifyemail', VerifyEmail)
+router.post('/signup', Developersignup)
+router.post('/verifyemail', VerifyEmail)
+router.post('/resendCode', ResendVerificationCode)
 
 router.post('/signin', signinValidation, Developersignin)
 
