@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function OTPVerificationPage() {
+  const location = useLocation();
+  const {otpcode, email} = location.state|| {};
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(59);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -42,25 +47,73 @@ function OTPVerificationPage() {
     }
   };
 
-  const handleResendOTP = () => {
-    setTimer(30);
+  const handleResendOTP = async() => {
+    const otpValue = Math.floor(100000 + Math.random() * 900000).toString()
+    const otpcode = {otpValue, generatedAt: Date.now()}
+    
+    setTimer(59);
     setIsResendDisabled(true);
     setError('');
-    // Add your resend OTP logic here
-    console.log('Resending OTP...');
+
+    try {
+       const resendOtpResponse = await fetch('http://localhost:3001/api/v1/auth/resendCode', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({OTP:otpValue, Email:email})
+      });
+    } catch (error) {
+      console.log(error)
+    }
+ 
+     
+
+   
+   
+
+
+  
   };
 
-  const handleVerify = () => {
+  const handleVerify = async () => {
     const enteredOtp = otp.join('');
+
     if (enteredOtp.length !== 6) {
       setError('Please enter a 6-digit OTP');
       return;
     }
+
+      if(Date.now() > otpcode.generatedAt+ 60000 ){
+        toast.error('OTP has been expired please resend new OTP!')
+        return;
+      }
+
+    if(otpcode.otpValue != enteredOtp){
+      toast.error('Wrong OTP!')
+      return;
+    }
+ 
     
-    // Add your verification logic here
-    console.log('Verifying OTP:', enteredOtp);
-    // On successful verification:
-    // navigate('/dashboard');
+try {
+   const response = await fetch('http://localhost:3001/api/v1/auth/verifyemail',{
+
+    method: 'POST',
+    headers:{
+       'Content-type': 'application/json'
+    },
+    body:JSON.stringify({Email:email})
+   })
+
+  //  const verifyResponse = await response.json()
+
+
+} catch (error) {
+  console.log(error)
+}
+  
+    
+  
   };
 
   const handleCancel = () => {
@@ -68,13 +121,13 @@ function OTPVerificationPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div className="flex items-center justify-center min-h-screen  p-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
         <div className="p-8">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-gray-800">Verify Your Email</h2>
             <p className="text-gray-600 mt-2">We've sent a 6-digit code to your email</p>
-            <p className="font-medium text-blue-600 mt-1">user@codequest.com</p>
+            <p className="font-medium text-black-600 mt-1">user@codequest.com</p>
           </div>
 
           <div className="flex justify-between mb-8">
@@ -101,7 +154,7 @@ function OTPVerificationPage() {
             ) : (
               <button 
                 onClick={handleResendOTP} 
-                className="text-blue-600 font-medium hover:text-blue-800 transition-colors"
+                className="text-black-600 font-medium hover:text-blue-800 transition-colors"
               >
                 Resend OTP
               </button>

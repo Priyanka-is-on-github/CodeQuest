@@ -45,13 +45,16 @@ function DeveloperSignup() {
     });
 
 
-    
-
-    const userValues = {...values, role:selectedRole}
+   
   
 
   const handleRegister = async () => {
     setIsSubmitting(true);
+ const otpValue = Math.floor(100000 + Math.random() * 900000).toString()
+ const otpcode = {otpValue, generatedAt: Date.now()}
+
+    const userValues = {...values, role:selectedRole, verificationCode:otpValue}
+
     try {
       const registeredUser = await fetch('http://localhost:3001/api/v1/auth/signup', {
         method: 'POST',
@@ -76,7 +79,12 @@ function DeveloperSignup() {
       } else {
        
      
-        navigate('/signup/otpverification');
+        navigate('/signup/otpverification', {
+          state:{
+            otpcode,
+           email: userValues.email,
+          }
+        });
       }
     } catch (error) {
       console.log(error);
@@ -199,8 +207,8 @@ function DeveloperSignup() {
                 <input
                   type="text"
                   autoComplete="off"
-                  name="college"
-                  id="college"
+                  name="collegeName"
+                  id="collegeName"
                   placeholder="College or University name"
                   value={values.collegeName}
                   onChange={handleChange}
@@ -237,10 +245,10 @@ function DeveloperSignup() {
               <div className={`flex border-2 ${errors.adharNumber && touched.adharNumber ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
                 <FaIdCard className="h-6 w-6 text-slate-500" />
                 <input
-                  type="adharnumber"
+                  type="adharNumber"
                   autoComplete="off"
-                  name="adharnumber"
-                  id="adharnumber"
+                  name="adharNumber"
+                  id="adharNumber"
                   placeholder="Enter your Aadhar number"
                   value={values.adharNumber}
                   onChange={handleChange}

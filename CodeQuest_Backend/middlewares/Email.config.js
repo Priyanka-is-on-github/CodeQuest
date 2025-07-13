@@ -12,7 +12,7 @@ const nodemailer = require("nodemailer");
     pass: "steq djex woax tvec",
   },
 });
-module.exports = transporter
+module.exports = {transporter}
 
 
 

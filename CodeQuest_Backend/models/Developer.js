@@ -40,7 +40,11 @@ const DeveloperSchema = new mongoose.Schema({
         default:false,
 
     },
-    verficationCode:String
+    // verificationCode:String,
+        
+       
+
+    
 },
 {timestamps:true}
 

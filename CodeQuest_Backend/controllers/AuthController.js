@@ -13,16 +13,11 @@ const { SendVerificationCode, WelcomeEmail } = require("../middlewares/Email");
 
 const Developersignup = async (req, res) => {
  
+ try {
 
-  //   hash the password
-  // const saltRound = 10;
-  // const hash_password = await bcrypt.hash(password, saltRound);
-
-  
-  try {
-
- const { name, email, password, degree, role, collegeName, adharNumber } = req.body;
+ const { name, email, password, degree, role, collegeName, adharNumber, verificationCode } = req.body;
     
+
       const userExist = await DeveloperModel.findOne({ email });
     
       if(userExist && !userExist.isVerified)
@@ -38,7 +33,7 @@ const Developersignup = async (req, res) => {
       }
 
 
-      const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
+      // const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
     const user = await DeveloperModel.create({
       name,
       email,
@@ -47,7 +42,7 @@ const Developersignup = async (req, res) => {
       role,
       collegeName,
       adharNumber,
-      verificationCode,
+      // verificationCode,
 
 
     });
@@ -122,20 +117,18 @@ if(!isPassEqual)
 
 const VerifyEmail = async(req, res)=>{
   try {
-    const {code} = req.body;
+    const {Email} = req.body;
     const user = await DeveloperModel.findOne({
-      verificationCode:code
+      email:Email
     })
 
     if(!user){
-      // await UserModel.deleteOne({
-      //   email
-      // })
+      
       return res.status(400).json({success:false, message:"Invalid or Expired code"})
     }
 
     user.isVerified =  true;
-    user.verificationCode=undefined;
+    // user.verificationCode=undefined;
     await user.save()
     await WelcomeEmail(user.email, user.name)
 
@@ -152,18 +145,10 @@ const ResendVerificationCode = async(req, res)=>{
 
 try {
   
-  const {email} = req.body;
-
-  const code = Math.floor(100000 + Math.random() * 900000).toString()
-    const user = await DeveloperModel.update({
-      email,
-      verificationCode:code,
-
-
-    });
-
-    await user.save();
-    SendVerificationCode(user.email, code)
+  const {Email, OTP} = req.body;
+ console.log('v=', OTP)
+   
+    SendVerificationCode(Email, OTP)
 
     return res.status(200).json({ msg: "code sended succesfully", success: true, user });
 

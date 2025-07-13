@@ -1,9 +1,10 @@
 
 const { Verification_Email_Template, Welcome_Email_Template } = require( '../libs/EmailTemplates');
-const transporter = require('./Email.config')
+const {transporter} = require('./Email.config')
 
  const SendVerificationCode = async(email, verificationCode)=>{
 
+ 
     try {
          const response = await transporter.sendMail({
     from: '"CodeQuest" <priyankasingh8885@gmail.com>',
@@ -14,7 +15,7 @@ const transporter = require('./Email.config')
   });
   console.log("Email send successfully", response)
     } catch (error) {
-        
+        console.log(error)
         console.log("Email error")
     }
 }
