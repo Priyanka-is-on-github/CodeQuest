@@ -1,32 +1,26 @@
+import { useAuth } from '@/context/AuthProvider';
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function OTPVerificationPage() {
   const location = useLocation();
-  const {otpcode, email} = location.state|| {};
+  var {otpcode, email} = location.state|| {};
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [timer, setTimer] = useState(59);
-  const [isResendDisabled, setIsResendDisabled] = useState(true);
+  const [isResendDisabled, setIsResendDisabled] = useState(true);  
   const [error, setError] = useState('');
   const navigate = useNavigate();
+const {selectedRole} = useAuth()
+  const [signupOTP, setSignupOTP] = useState(otpcode);
 
-  
+  useEffect(()=>{
 
-  useEffect(() => {
-    const countdown = setInterval(() => {
-      setTimer((prevTimer) => {
-        if (prevTimer <= 1) {
-          clearInterval(countdown);
-          setIsResendDisabled(false);
-          return 0;
-        }
-        return prevTimer - 1;
-      });
-    }, 1000);
+    if(otpcode)
+    setSignupOTP(otpcode)
+  }, [])
 
-    return () => clearInterval(countdown);
-  }, []);
+ 
 
   const handleOtpChange = (index:number, value:any) => {
     if (isNaN(value)) return;
@@ -48,13 +42,16 @@ function OTPVerificationPage() {
   };
 
   const handleResendOTP = async() => {
+    setOtp(['', '', '', '', '', ''])
     const otpValue = Math.floor(100000 + Math.random() * 900000).toString()
-    const otpcode = {otpValue, generatedAt: Date.now()}
-    
-    setTimer(59);
-    setIsResendDisabled(true);
-    setError('');
 
+ 
+     otpcode = {otpValue, generatedAt: Date.now()}
+
+     setSignupOTP(otpcode)
+
+
+    
     try {
        const resendOtpResponse = await fetch('http://localhost:3001/api/v1/auth/resendCode', {
         method: 'POST',
@@ -63,33 +60,37 @@ function OTPVerificationPage() {
         },
         body: JSON.stringify({OTP:otpValue, Email:email})
       });
+
+      // const resendOtpResponsejson = await resendOtpResponse.json()
+   
     } catch (error) {
       console.log(error)
     }
  
      
-
+    setTimer(59);
+    setIsResendDisabled(true);
+    setError('');
    
-   
+};
 
-
-  
-  };
 
   const handleVerify = async () => {
     const enteredOtp = otp.join('');
+   
 
     if (enteredOtp.length !== 6) {
       setError('Please enter a 6-digit OTP');
       return;
     }
 
-      if(Date.now() > otpcode.generatedAt+ 60000 ){
+
+      if(Date.now() > (signupOTP?.generatedAt+ 60000) ){
         toast.error('OTP has been expired please resend new OTP!')
         return;
       }
 
-    if(otpcode.otpValue != enteredOtp){
+    if(signupOTP?.otpValue != enteredOtp){
       toast.error('Wrong OTP!')
       return;
     }
@@ -105,29 +106,51 @@ try {
     body:JSON.stringify({Email:email})
    })
 
-  //  const verifyResponse = await response.json()
+   const verifyResponse = await response.json()
 
+if(verifyResponse.msg === 'Email verified successfully')
+      {
+        toast.success("Email verified successfully!")
+        navigate(`/signin/${selectedRole}`)
+      }
+      else{
+        toast.error("Invalid or Expired code!")
+      }
 
 } catch (error) {
   console.log(error)
 }
-  
-    
-  
-  };
+};
 
   const handleCancel = () => {
     navigate('/');
   };
 
+
+   useEffect(() => {
+    const countdown = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer <= 1) {
+          clearInterval(countdown);
+          setIsResendDisabled(false);
+          return 0;
+        }
+        return prevTimer - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(countdown);
+  }, [isResendDisabled]);
+
+
   return (
-    <div className="flex items-center justify-center min-h-screen  p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
+    <div className="flex items-center justify-center min-h-screen  p-4 bg-gradient-to-br from-blue-50 to-indigo-100 ">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden ">
         <div className="p-8">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-gray-800">Verify Your Email</h2>
             <p className="text-gray-600 mt-2">We've sent a 6-digit code to your email</p>
-            <p className="font-medium text-black-600 mt-1">user@codequest.com</p>
+            <p className="font-medium text-black-600 mt-1">{email}</p>
           </div>
 
           <div className="flex justify-between mb-8">

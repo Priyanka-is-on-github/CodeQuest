@@ -1,6 +1,6 @@
 
 const { Verification_Email_Template, Welcome_Email_Template } = require( '../libs/EmailTemplates');
-const {transporter} = require('./Email.config')
+const transporter= require('./Email.config')
 
  const SendVerificationCode = async(email, verificationCode)=>{
 
@@ -13,10 +13,12 @@ const {transporter} = require('./Email.config')
     text: "Verify your Email", // plain‑text body
     html: Verification_Email_Template.replace("{verificationCode}", verificationCode), // HTML body
   });
-  console.log("Email send successfully", response)
+
     } catch (error) {
-        console.log(error)
-        console.log("Email error")
+        
+     
+
+        return error
     }
 }
  const WelcomeEmail = async(email, name)=>{
@@ -29,10 +31,10 @@ const {transporter} = require('./Email.config')
     text: "Welcome to CodeQuest!", // plain‑text body
     html: Welcome_Email_Template.replace("{name}", name), // HTML body
   });
-  console.log("Email send successfully", response)
+
     } catch (error) {
         
-        console.log("Email error")
+        return error
     }
 }
 module.exports = {SendVerificationCode, WelcomeEmail}

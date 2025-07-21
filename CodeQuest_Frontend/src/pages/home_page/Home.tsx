@@ -1,9 +1,18 @@
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/context/AuthProvider'
 import Layout from '@/layout/Layout'
 import React from 'react'
 import {Link} from 'react-router-dom'
 
 function Home() {
+  const {selectedRole} = useAuth();
+
+  const getLinkPath = () => {
+  if (selectedRole === '') return '/authorize';
+  if (selectedRole === 'developer') return '/compete';
+  return '/';
+};
+
   return (
     <>
     <Layout>
@@ -27,13 +36,17 @@ function Home() {
   Developers prove their skills • Companies discover top talent
 </p>
       <div className="flex flex-col sm:flex-row gap-4 mt-10">
-        <Link 
-          to="/compete"
-          className="relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-semibold text-white transition-all duration-300 ease-in-out rounded-lg shadow-lg group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-        >
-          <span className="relative z-10">Get Started Now</span>
-          <span className="absolute inset-0 bg-white opacity-10 group-hover:opacity-5 transition-opacity duration-300"></span>
-        </Link>
+
+       <Link 
+  to={getLinkPath()}
+  className="relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-semibold text-white transition-all duration-300 ease-in-out rounded-lg shadow-lg group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+>
+  <span className="relative z-10">Get Started Now</span>
+  <span className="absolute inset-0 bg-white opacity-10 group-hover:opacity-5 transition-opacity duration-300"></span>
+</Link>
+
+         
+      
         
         <a
           href="#how-it-works"
@@ -234,7 +247,7 @@ function Home() {
     {/* CTA Button */}
     <div className="text-center mt-16">
        <Link 
-          to="/signup"
+            to={getLinkPath()}
           className="relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-semibold text-white transition-all duration-300 ease-in-out rounded-lg shadow-lg group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
         >
           <span className="relative z-10">Get Started Now</span>

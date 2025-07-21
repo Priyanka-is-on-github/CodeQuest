@@ -53,8 +53,8 @@ const router = createBrowserRouter([
       errorElement: <Error />,
     },
     {
-      path: "/user/dashboard",
-      element:<ProtectedRoutes requireRole={'user'}> <Dashboard/> </ProtectedRoutes> ,
+      path: "/developer/dashboard",
+      element:<ProtectedRoutes requireRole={'developer'}> <Dashboard/> </ProtectedRoutes> ,
       errorElement: <Error />,
     },
     {
@@ -78,8 +78,8 @@ const router = createBrowserRouter([
       errorElement: <Error />,
     },
     {
-      path: "/compete",
-      element: <Compete/>,
+      path:"/compete",
+      element: <ProtectedRoutes requireRole={'developer'}> <Compete/> </ProtectedRoutes>,
       errorElement: <Error />,
     },
     {
@@ -93,8 +93,8 @@ const router = createBrowserRouter([
       errorElement: <Error />,
     },
     {
-      path: "/admin/dashboard",
-      element: <ProtectedRoutes requireRole={'admin'}><AdminDashboard/></ProtectedRoutes>,
+      path: "/recruiter/dashboard",
+      element: <ProtectedRoutes requireRole={'recruiter'}><AdminDashboard/></ProtectedRoutes>,
       errorElement: <Error />,
     },
     

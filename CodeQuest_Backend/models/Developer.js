@@ -24,7 +24,7 @@ const DeveloperSchema = new mongoose.Schema({
     role:{
         type:String,
         enum:["recruiter", "developer"],
-        default:"user",
+        default:"developer",
         required:true
     },
     collegeName:{

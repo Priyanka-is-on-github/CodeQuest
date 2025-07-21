@@ -38,6 +38,7 @@ function SignupUser() {
       },
     });
 
+    
       const handleSignin = async()=>{
         setIsSubmitting(true)
       try {
@@ -69,7 +70,7 @@ toast.success('Signin Successfull!')
 // Role-based redirection
 
 
- const redirectPath= location?.state?.from || (data.user.role === 'admin'? '/admin/dashboard': '/user/dashboard');
+ const redirectPath= location?.state?.from || (data.user.role === 'recruiter'? '/recruiter/dashboard': '/developer/dashboard');
 
 
 navigate(redirectPath, {replace:true})  
@@ -105,6 +106,7 @@ navigate(redirectPath, {replace:true})
               Welcome back to <span className="text-blue-600">CodeQuest!</span>
             </h1>
             
+
                <p className="text-gray-500">
              Land your dream Internship
             </p>

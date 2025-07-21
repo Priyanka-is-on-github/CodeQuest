@@ -3,11 +3,11 @@ const bcrypt = require("bcrypt");
 const { setUser } = require("../service/auth");
 
 const router = express.Router();
-const UserModel = require("../models/Developer");
-const { signupValidation, signinValidation } = require("../middlewares/Email.config");
-const { Developersignup, Developersignin, VerifyEmail, ResendVerificationCode } = require("../controllers/AuthController");
 
-const AuthRoutes=express.Router()
+
+const { Developersignup, Developersignin, VerifyEmail, ResendVerificationCode } = require("../controllers/AuthController");
+const signinValidation = require("../middlewares/signinValidation")
+
 
 router.post('/signup', Developersignup)
 router.post('/verifyemail', VerifyEmail)

@@ -83,6 +83,7 @@ function DeveloperSignup() {
           state:{
             otpcode,
            email: userValues.email,
+         
           }
         });
       }

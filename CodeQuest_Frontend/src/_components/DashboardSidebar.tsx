@@ -19,7 +19,7 @@ const routes = [
   {
     label: "Dashboard",
     icon: <Layout />,
-    link: "/user/dashboard",
+    link: "/developer/dashboard",
   },
   {
     icon: <Settings />,

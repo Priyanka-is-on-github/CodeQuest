@@ -43,14 +43,12 @@ const Developersignup = async (req, res) => {
       collegeName,
       adharNumber,
       // verificationCode,
-
-
-    });
+});
 
     await user.save();
    await SendVerificationCode(user.email, verificationCode)
 
-    return res.status(201).json({ msg: "user created", success: true, user });
+    return res.status(201).json({ msg: "user created", success: true});
 
 
   } catch (error) {
@@ -58,7 +56,7 @@ const Developersignup = async (req, res) => {
 
     return res
       .status(500)
-      .json({ msg: "Internal server error", success: false });
+      .json({ msg: "Internal server error", success: false });c
   }
 };
 const Developersignin = async (req, res) => {
@@ -66,12 +64,8 @@ const Developersignin = async (req, res) => {
 const user = req.user; // From middleware
  
   try {
-
+const isPassEqual = await bcrypt.compare(password, user.password)
   
-  
-    const isPassEqual = await bcrypt.compare(password, user.password)
-  
-   
 if(!isPassEqual)
 {
    return res.status(401).json({ msg: "invalid email and password", success: false});
@@ -96,7 +90,8 @@ if(!isPassEqual)
         name: user.name,
         id: user._id,
         role:user.role,
-        degree: user.degree
+        degree: user.degree,
+        collegeName: user.collegeName
       }});
 
 
@@ -124,7 +119,7 @@ const VerifyEmail = async(req, res)=>{
 
     if(!user){
       
-      return res.status(400).json({success:false, message:"Invalid or Expired code"})
+      return res.status(400).json({success:false, msg:"Invalid or Expired code"})
     }
 
     user.isVerified =  true;
@@ -132,7 +127,7 @@ const VerifyEmail = async(req, res)=>{
     await user.save()
     await WelcomeEmail(user.email, user.name)
 
-return res.status(200).json({success:true, message:"Email verified successfully"})
+return res.status(200).json({success:true, msg:"Email verified successfully"})
 
   } catch (error) {
      return res
@@ -146,14 +141,14 @@ const ResendVerificationCode = async(req, res)=>{
 try {
   
   const {Email, OTP} = req.body;
- console.log('v=', OTP)
+
    
-    SendVerificationCode(Email, OTP)
+   await SendVerificationCode(Email, OTP)
 
     return res.status(200).json({ msg: "code sended succesfully", success: true, user });
 
  } catch (error) {
-   return res.status(500).json({ msg: "Internal server error", success: false });
+   return res.status(500).json({ msg: error, success: false });
 }
 }
 

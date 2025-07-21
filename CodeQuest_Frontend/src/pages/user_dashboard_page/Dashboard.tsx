@@ -1,21 +1,13 @@
-import Leaderboard from "@/_components/Leaderboard";
-import LineChart from "@/_components/LineChart";
+
 import { Button } from "@/components/ui/button";
 import DashboardLayout from "@/layout/DashboardLayout";
 
 import { useState } from "react";
-import {
-  CircularProgressbar,
- 
-  buildStyles,
-} from "react-circular-progressbar";
+
 import { 
   AcademicCapIcon,
   BuildingLibraryIcon,
-  QuestionMarkCircleIcon,
-  CheckCircleIcon,
-  ClockIcon,
-  CalendarIcon
+
 } from '@heroicons/react/24/outline';
 import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthProvider";
@@ -158,7 +150,7 @@ const {user} = useAuth();
         <div className="flex items-center gap-2">
           <BuildingLibraryIcon className="h-5 w-5 text-blue-300" />
           <p className="text-sm font-medium text-blue-100">
-            University: ABC University
+            University: {user.collegeName}
           </p>
         </div>
       </div>
