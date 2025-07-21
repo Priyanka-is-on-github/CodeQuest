@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "@/context/AuthProvider";
+import toast from "react-hot-toast";
 
 const routes = [
   {
@@ -31,11 +32,13 @@ const routes = [
 function DashboardSidebar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { signout } = useAuth(); // Get signout function from your auth context
+  const { signout, setSelectedRole } = useAuth(); // Get signout function from your auth context
 
   const handleLogout = () => {
     signout(); // Call your logout function
+    toast.success('Logout successful');
     navigate("/"); // Redirect to home page
+    setSelectedRole('')
   };
 
   return (

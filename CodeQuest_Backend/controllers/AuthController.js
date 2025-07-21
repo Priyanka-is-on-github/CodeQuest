@@ -18,6 +18,7 @@ const Developersignup = async (req, res) => {
  const { name, email, password, degree, role, collegeName, adharNumber, verificationCode } = req.body;
     
 
+
       const userExist = await DeveloperModel.findOne({ email });
     
       if(userExist && !userExist.isVerified)
@@ -141,7 +142,7 @@ const ResendVerificationCode = async(req, res)=>{
 try {
   
   const {Email, OTP} = req.body;
-
+ 
    
    await SendVerificationCode(Email, OTP)
 

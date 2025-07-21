@@ -34,7 +34,7 @@ const transporter= require('./Email.config')
 
     } catch (error) {
         
-        return error
+       console.log('welcome email error=',error)
     }
 }
 module.exports = {SendVerificationCode, WelcomeEmail}

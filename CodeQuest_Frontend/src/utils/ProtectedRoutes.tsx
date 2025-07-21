@@ -39,6 +39,7 @@ function ProtectedRoutes({
     }
     if (!user) {
       debouncedToastError("Sign up to get started!");
+     
       navigate("/");
       return;
     }

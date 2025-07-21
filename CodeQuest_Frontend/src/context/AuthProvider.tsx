@@ -8,7 +8,7 @@ signin:(userData:any, token:string)=>void,
 signout:()=>void,
 checkAuth:()=>boolean
  selectedRole:string | null,
-  setSelectedRole:Dispatch<SetStateAction<string| null>>,
+  setSelectedRole:Dispatch<SetStateAction<string>>,
 }
 const AuthContext = createContext<AuthContextType>({
   user:null,
@@ -55,6 +55,7 @@ const checkAuth = () => {
     setUser(null);
     localStorage.removeItem("pos-user");
     localStorage.removeItem("pos-token");
+    localStorage.removeItem("role");
   }
 
   return (

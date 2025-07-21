@@ -4,12 +4,13 @@ import {toast} from 'react-hot-toast'
 import { useAuth } from '@/context/AuthProvider'
 
 function Navbar() {
-const {user, signout} = useAuth()
+const {user, signout, selectedRole, setSelectedRole} = useAuth()
 const { pathname } = useLocation();
 // Calculate roles once during render
-  const isAdmin = user?.role === 'admin';
-  const isUser = user?.role === 'user';
-const {selectedRole} = useAuth()
+  const isRecruiter = user?.role === 'recruiter';
+  const isDeveloper = user?.role === 'developer';
+
+
 
   const navigate = useNavigate()
   const handleLogout = async () => {
@@ -21,7 +22,9 @@ const {selectedRole} = useAuth()
         signout()
             toast.success('Logout successful');
             // Redirect to login or home page
+
            navigate('/')
+           setSelectedRole('')
         } 
            
         catch (error) {
@@ -41,7 +44,7 @@ const {selectedRole} = useAuth()
           <span className={`${pathname === '/'? "absolute left-0 -bottom-1  h-0.5 bg-blue-500 w-full ": "absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"}`}></span>
         </Link>
         {
-          isUser && (
+          isDeveloper && (
  <Link 
           to="/compete" 
           className={`${pathname === '/compete'?"relative group font-medium text-white" :  "relative group font-medium text-gray-300 hover:text-white transition-colors duration-300"}`}
@@ -54,11 +57,11 @@ const {selectedRole} = useAuth()
        
 
         {/* Conditional Links */}
-        {isUser && !isAdmin && (
+        {isDeveloper && !isRecruiter && (
           <>
           
           <Link 
-            to="/user/dashboard" 
+            to="/developer/dashboard" 
             className={`${pathname === '/user/dashboard'?"relative group font-medium text-white" :  "relative group font-medium text-gray-300 hover:text-white transition-colors duration-300"}`}
           >
             Dashboard
@@ -66,9 +69,9 @@ const {selectedRole} = useAuth()
           </Link></>
         )}
 
-        {isAdmin && (
+        {isRecruiter && (
           <Link 
-            to="/admin/dashboard" 
+            to="/recruiter/dashboard" 
             className={`${pathname === '/admin/dashboard'?"relative group font-medium text-white" :  "relative group font-medium text-gray-300 hover:text-white transition-colors duration-300"}`}
           >
             Admin Panel
@@ -78,7 +81,7 @@ const {selectedRole} = useAuth()
 
         {/* Auth Buttons */}
         <div className="flex items-center space-x-4 ml-4">
-          {!isUser && !isAdmin? (
+          {!user? (
             <>
              <Link 
                 to="/signin" 

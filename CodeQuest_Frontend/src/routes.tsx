@@ -24,6 +24,7 @@ import ProtectedRoutes from "./utils/ProtectedRoutes";
 import InternshipInfoPage from "./pages/compete_page/InternshipInfoPage";
 import Authentication from "./pages/authentication";
 import OTPVerificationPage from "./pages/register_page/OTPVerificationPage";
+import RecruiterSignup from "./pages/register_page/RecruiterSignup";
 
 
 const router = createBrowserRouter([
@@ -52,6 +53,13 @@ const router = createBrowserRouter([
       element: <SigninUser/>,
       errorElement: <Error />,
     },
+{
+      path: "/signup/recruiter",
+      element: <RecruiterSignup/>,
+      errorElement: <Error />,
+    },
+
+
     {
       path: "/developer/dashboard",
       element:<ProtectedRoutes requireRole={'developer'}> <Dashboard/> </ProtectedRoutes> ,

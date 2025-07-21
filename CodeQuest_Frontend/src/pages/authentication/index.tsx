@@ -13,9 +13,12 @@ const {selectedRole, setSelectedRole} = useAuth();
   };
 
   const proceedToAuth = () => {
-    if (selectedRole) {
+    if (selectedRole === 'developer') {
       navigate(`/signup/${selectedRole}`);
    
+    }
+    else{
+      navigate('/signup/recruiter');
     }
   };
 

@@ -74,7 +74,8 @@ function DeveloperSignup() {
       }
 
       if (jsondata.msg === 'email already exists you can login') {
-        toast.error('Email already exists you can login');
+        toast('Email already exists you can login');
+        navigate(`/signin/${selectedRole}`)
        
       } else {
        
