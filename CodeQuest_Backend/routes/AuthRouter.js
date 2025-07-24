@@ -6,7 +6,8 @@ const router = express.Router();
 
 
 const { Developersignup, Developersignin, VerifyEmail, ResendVerificationCode } = require("../controllers/AuthController");
-const signinValidation = require("../middlewares/signinValidation")
+const signinValidation = require("../middlewares/signinValidation");
+const SearchCompanies = require("../controllers/SearchCompanies");
 
 
 router.post('/signup', Developersignup)
@@ -14,6 +15,8 @@ router.post('/verifyemail', VerifyEmail)
 router.post('/resendCode', ResendVerificationCode)
 
 router.post('/signin', signinValidation, Developersignin)
+router.get('/search', SearchCompanies);
+
 
 
 // router.post("/login", async (req, res) => {

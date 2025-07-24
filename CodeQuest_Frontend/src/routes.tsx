@@ -18,13 +18,13 @@ import ProblemPage from "./pages/user_dashboard_page/ProblemPage";
 import AdminDashboard from "./pages/admin_page/AdminDashboard";
 import IntershipManagement from "./pages/intership_management";
 import SigninUser from "./pages/signin_page/SigninUser";
-import DeveloperSignup from "./pages/register_page/DeveloperSignup";
+import DeveloperSignup from "./pages/register_page/Developer/DeveloperSignup";
 import Unauthorised from "./pages/unauthorized_page";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import InternshipInfoPage from "./pages/compete_page/InternshipInfoPage";
 import Authentication from "./pages/authentication";
-import OTPVerificationPage from "./pages/register_page/OTPVerificationPage";
-import RecruiterSignup from "./pages/register_page/RecruiterSignup";
+import OTPVerificationPage from "./pages/register_page/Developer/OTPVerificationPage";
+import RecruiterSignup from "./pages/register_page/Recruiter/RecruiterSignup";
 
 
 const router = createBrowserRouter([

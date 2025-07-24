@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { Button } from "@/components/ui/button";
-import DeveloperSignupSchema from "./schema/DeveloperSignupSchema";
+import DeveloperSignupSchema from "../schema/DeveloperSignupSchema";
 import { IoPersonOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { MdOutlineMail } from "react-icons/md";
@@ -18,15 +18,13 @@ const initialValues = {
   name: "",
   email: "",
   password: "",
-  college:'',
-   role: "",
-
+  collegeName:'',
   degree: "",
-  adharnumber:"",
+  adharNumber:"",
  
 };
 
-function RecruiterSignup() {
+function DeveloperSignup() {
   const {selectedRole} = useAuth()
   const navigate = useNavigate();
 
@@ -46,13 +44,17 @@ function RecruiterSignup() {
       },
     });
 
-   
-    
 
-    const userValues = {...values, role:selectedRole}
+   
+  
 
   const handleRegister = async () => {
     setIsSubmitting(true);
+ const otpValue = Math.floor(100000 + Math.random() * 900000).toString()
+ const otpcode = {otpValue, generatedAt: Date.now()}
+
+    const userValues = {...values, role:selectedRole, verificationCode:otpValue}
+
     try {
       const registeredUser = await fetch('http://localhost:3001/api/v1/auth/signup', {
         method: 'POST',
@@ -64,13 +66,27 @@ function RecruiterSignup() {
 
       const jsondata = await registeredUser.json();
 
+      
+      if(jsondata.msg === 'Verify your Email')
+      {
+        toast.success("Verify your Email!")
+        navigate('/signup/otpverification')
+      }
+
       if (jsondata.msg === 'email already exists you can login') {
-        toast.error('Email already exists you can login');
+        toast('Email already exists you can login');
+        navigate(`/signin/${selectedRole}`)
        
       } else {
-        toast.success('Your account has been created!');
+       
      
-        navigate('/signin');
+        navigate('/signup/otpverification', {
+          state:{
+            otpcode,
+           email: userValues.email,
+         
+          }
+        });
       }
     } catch (error) {
       console.log(error);
@@ -111,12 +127,12 @@ function RecruiterSignup() {
               Join <span className="text-blue-600">CodeQuest</span>
             </h1>
             
-               
+               <p className="text-gray-500">
+              Land your Dream Internship
+            </p>
             
             
-           <p className="text-gray-500">
-               Discover top tech talent
-            </p> 
+          
             
             
           </div>
@@ -188,22 +204,22 @@ function RecruiterSignup() {
             
 
             <div className="mb-6 w-[27vw]">
-              <div className={`flex border-2 ${errors.college && touched.college ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
+              <div className={`flex border-2 ${errors.collegeName && touched.collegeName ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
                 <UniversityIcon className="h-6 w-6 text-slate-500" />
                 <input
                   type="text"
                   autoComplete="off"
-                  name="college"
-                  id="college"
+                  name="collegeName"
+                  id="collegeName"
                   placeholder="College or University name"
-                  value={values.college}
+                  value={values.collegeName}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className="pl-3 outline-none bg-transparent w-full"
                 />
               </div>
-              {errors.college && touched.college && (
-                <p className="text-sm text-red-600 mt-1 ml-2">{errors.college}</p>
+              {errors.collegeName && touched.collegeName && (
+                <p className="text-sm text-red-600 mt-1 ml-2">{errors.collegeName}</p>
               )}
             </div>
 
@@ -228,22 +244,22 @@ function RecruiterSignup() {
             </div>
 
             <div className="mb-6 w-[27vw]">
-              <div className={`flex border-2 ${errors.adharnumber && touched.adharnumber ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
+              <div className={`flex border-2 ${errors.adharNumber && touched.adharNumber ? 'border-red-300' : 'border-gray-100'} w-96 shadow-xl shadow-blue-200 rounded-3xl pl-4 p-3 bg-white`}>
                 <FaIdCard className="h-6 w-6 text-slate-500" />
                 <input
-                  type="adharnumber"
+                  type="adharNumber"
                   autoComplete="off"
-                  name="adharnumber"
-                  id="adharnumber"
+                  name="adharNumber"
+                  id="adharNumber"
                   placeholder="Enter your Aadhar number"
-                  value={values.adharnumber}
+                  value={values.adharNumber}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className="pl-3 outline-none bg-transparent w-full"
                 />
               </div>
-              {errors.adharnumber && touched.adharnumber && (
-                <p className="text-sm text-red-600 mt-1 ml-2">{errors.adharnumber}</p>
+              {errors.adharNumber && touched.adharNumber && (
+                <p className="text-sm text-red-600 mt-1 ml-2">{errors.adharNumber}</p>
               )}
             </div> 
 
@@ -289,4 +305,4 @@ function RecruiterSignup() {
   );
 }
 
-export default RecruiterSignup;
+export default DeveloperSignup;
