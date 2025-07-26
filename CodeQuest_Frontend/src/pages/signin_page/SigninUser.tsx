@@ -9,7 +9,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import { useState } from "react";
-import SigninSchema from "./SigninSchema";
+import SigninSchema from "./SigninValidationSchema";
 import { useAuth } from "@/context/AuthProvider";
 
 
@@ -24,7 +24,7 @@ function SignupUser() {
  
   const {signin} = useAuth();
   const navigate = useNavigate();
-  const {selectedRole} = useAuth()
+  
   const location = useLocation()
     const [isSubmitting, setIsSubmitting] = useState(false);
   const { values, errors, touched, handleBlur, handleChange, handleSubmit,  isValid,
@@ -32,15 +32,9 @@ function SignupUser() {
     useFormik({
       initialValues,
       validationSchema: SigninSchema,
-      onSubmit: (values, action) => {
-  
-        action.resetForm();
-      },
-    });
-
-    
-      const handleSignin = async()=>{
-        setIsSubmitting(true)
+      onSubmit: async(values, action) => {
+        
+         setIsSubmitting(true)
       try {
         
         const response = await fetch('http://localhost:3001/api/v1/auth/signin',{
@@ -74,6 +68,7 @@ toast.success('Signin Successfull!')
 
 
 navigate(redirectPath, {replace:true})  
+ action.resetForm();
 
       } catch (error:any) {
       console.error('Login Error:', error);
@@ -86,10 +81,64 @@ navigate(redirectPath, {replace:true})
         setIsSubmitting(false)
       }
     }
+       
+      
+    });
+
+    
+//       const handleSignin = async()=>{
+//         setIsSubmitting(true)
+//       try {
+        
+//         const response = await fetch('http://localhost:3001/api/v1/auth/signin',{
+            
+//             method: 'POST', 
+//             headers: {
+//                 'Content-Type': 'application/json', 
+            
+//             },
+//             body: JSON.stringify(values), 
+//         })
+
+    
+//         const data = await response.json();
+      
+
+// if(!response.ok){
+//   const errorMessage = data.msg || "Signin failed, Please try again."
+//   toast.error(errorMessage)
+//   return;
+// }
+
+// // Successful login
+// signin(data.user, data.token)
+// toast.success('Signin Successfull!')
+
+// // Role-based redirection
+
+
+//  const redirectPath= location?.state?.from || (data.user.role === 'recruiter'? '/recruiter/dashboard': '/developer/dashboard');
+
+
+// navigate(redirectPath, {replace:true})  
+
+//       } catch (error:any) {
+//       console.error('Login Error:', error);
+//     toast.error(error.message.includes('Unexpected response') 
+//       ? 'Server error - please try again' 
+//       : error.message);
+
+//       }
+//       finally{
+//         setIsSubmitting(false)
+//       }
+//     }
 
   return (
     <div className="flex min-h-screen ">
      {/* Left Side - Image */}
+
+    
       <div className="md:w-1/2 bg-blue-50 flex items-center justify-center p-8">
         <img 
           src="/boy.jpg" 
@@ -165,7 +214,7 @@ navigate(redirectPath, {replace:true})
                 type="submit"
                 className="w-full py-4 rounded-2xl bg-gray-800 hover:bg-gray-900 text-white font-medium shadow-md transition-all"
                 disabled={isSubmitting || !isValid || !dirty}
-                 onClick={handleSignin}
+                //  onClick={handleSignin}
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center">

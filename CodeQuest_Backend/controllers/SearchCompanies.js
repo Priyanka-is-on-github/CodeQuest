@@ -9,7 +9,7 @@ const  SearchCompanies= async(req, res) =>{
 
         const company = await CompanyModel.findOne({name: query});
 
-   console.log('c=', company)
+
 
    if(company === null ){
     res.status(401).json({

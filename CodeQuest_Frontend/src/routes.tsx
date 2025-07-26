@@ -25,6 +25,8 @@ import InternshipInfoPage from "./pages/compete_page/InternshipInfoPage";
 import Authentication from "./pages/authentication";
 import OTPVerificationPage from "./pages/register_page/Developer/OTPVerificationPage";
 import RecruiterSignup from "./pages/register_page/Recruiter/RecruiterSignup";
+import { useAuth } from "./context/AuthProvider";
+import RecruiterSignin from "./pages/signin_page/RecruiterSignin";
 
 
 const router = createBrowserRouter([
@@ -53,8 +55,14 @@ const router = createBrowserRouter([
       element: <SigninUser/>,
       errorElement: <Error />,
     },
+    {
+      path: "/:selectedRole/signin",
+      element: <RecruiterSignin/>,
+      errorElement: <Error />,
+    },
+    
 {
-      path: "/signup/recruiter",
+      path: "/recruiter/signup",
       element: <RecruiterSignup/>,
       errorElement: <Error />,
     },

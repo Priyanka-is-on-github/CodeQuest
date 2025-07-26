@@ -36,6 +36,7 @@ app.use(express.json());
 
 
 app.use('/api/v1/auth', AuthRouter )
+app.use('/api/v1/auth/signup', AuthRouter )
 app.use('/api/v1/auth/companies', AuthRouter )
 app.use('/api/v1/createtest', createtestRouter)
 app.use('/api/v1/question', questionRouter)
