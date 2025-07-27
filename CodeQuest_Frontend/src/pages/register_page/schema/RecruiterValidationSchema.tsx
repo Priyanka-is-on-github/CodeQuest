@@ -2,6 +2,7 @@
 import * as Yup from 'yup';
 
  const RecruiterValidationSchema = Yup.object().shape({
+    companyName: Yup.string().required('Name is required'),
   name: Yup.string().min(2, 'Name must be at least 2 characters').max(25, 'Name cannot exceed 25 characters').required('Full name is required'),
  email: Yup.string()
   .required('Work email is required')

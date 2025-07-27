@@ -34,7 +34,7 @@ const { pathname } = useLocation();
 };
 
  
-
+console.log('user=', user)
   return (
     
    <nav className="hidden md:flex items-center space-x-8 ">
@@ -86,21 +86,32 @@ const { pathname } = useLocation();
           {!user? (
             <>
 
-            {
-               user?.role === ''?(<Link 
-                to="/authorize" 
-                className="px-4 py-2 rounded-md font-medium text-blue-500 border border-blue-500 hover:bg-blue-500 hover:bg-opacity-10 transition-colors duration-300"
-              >
-                Signin
-              </Link>):(
-                <Link 
-                to={`signup/${selectedRole}` }
-                className="px-4 py-2 rounded-md font-medium text-blue-500 border border-blue-500 hover:bg-blue-500 hover:bg-opacity-10 transition-colors duration-300"
-              >
-                Signin
-              </Link>
-              )
-            }
+          {
+  user === null && (
+    selectedRole === '' ? (
+      <Link
+        to={`/authorize`}
+        className="px-4 py-2 rounded-md font-medium text-blue-500 border border-blue-500 hover:bg-blue-500 hover:bg-opacity-10 transition-colors duration-300"
+      >
+        Signin
+      </Link>
+    ) : selectedRole === 'developer' ? (
+      <Link
+        to={`/signin/${selectedRole}`}
+        className="px-4 py-2 rounded-md font-medium text-blue-500 border border-blue-500 hover:bg-blue-500 hover:bg-opacity-10 transition-colors duration-300"
+      >
+        Signin
+      </Link>
+    ) : (
+      <Link
+        to={`/${selectedRole}/signin`}
+        className="px-4 py-2 rounded-md font-medium text-blue-500 border border-blue-500 hover:bg-blue-500 hover:bg-opacity-10 transition-colors duration-300"
+      >
+        Signin
+      </Link>
+    )
+  )
+}
              
 
 
@@ -111,8 +122,15 @@ const { pathname } = useLocation();
                 className="px-4 py-2 rounded-md font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
               >
                 Create account
-              </Link>):(<Link 
-                to={`signup/${selectedRole}` }
+              </Link>): selectedRole === 'developer'? (
+                <Link 
+                to={`/signup/${selectedRole}` }
+                className="px-4 py-2 rounded-md font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              >
+                Create account
+              </Link>
+              ):(<Link 
+                to={`/${selectedRole}/signup` }
                 className="px-4 py-2 rounded-md font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
               >
                 Create account

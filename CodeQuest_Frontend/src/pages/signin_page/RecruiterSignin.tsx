@@ -12,7 +12,7 @@ import { useState } from "react";
 
 import { useAuth } from "@/context/AuthProvider";
 import { ArrowRightIcon, EyeIcon } from "lucide-react";
-import RecruiterSigninSchema from "./SigninValidationSchema";
+import {RecruiterSigninSchema} from "./SigninValidationSchema";
 
 const initialValues = {
  
@@ -35,10 +35,11 @@ function RecruiterSignin() {
       validationSchema: RecruiterSigninSchema,
       onSubmit: async(values, action) => {
   
+      
         setIsSubmitting(true)
       try {
         
-        const response = await fetch('http://localhost:3001/api/v1/auth/recruiter/signin',{
+        const response = await fetch('http://localhost:3001/api/v1/auth/recruiter/recruitersignIn',{
             
             method: 'POST', 
             headers: {

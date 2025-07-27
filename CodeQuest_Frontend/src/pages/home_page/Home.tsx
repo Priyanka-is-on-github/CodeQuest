@@ -10,7 +10,7 @@ function Home() {
   const getLinkPath = () => {
   if (selectedRole === '') return '/authorize';
   if (selectedRole === 'developer') return '/compete';
-  return '/';
+  return '/recruiter/dashboard';
 };
 
   return (

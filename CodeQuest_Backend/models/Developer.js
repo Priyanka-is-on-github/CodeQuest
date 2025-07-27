@@ -10,7 +10,7 @@ const DeveloperSchema = new mongoose.Schema({
     },
     email:{
         type:String,
-        //unique:true,
+        unique:true,
         required:true
     },
     password:{
@@ -23,9 +23,9 @@ const DeveloperSchema = new mongoose.Schema({
     },
     role:{
         type:String,
-        enum:["recruiter", "developer"],
+        // enum:["recruiter", "developer"],
         default:"developer",
-        required:true
+     
     },
     collegeName:{
         type:String,

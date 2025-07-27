@@ -1,5 +1,6 @@
 import { useAuth } from '@/context/AuthProvider';
 import { Home, Layout, LogOut, Settings, TabletSmartphone, User2Icon } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 import { IoNotifications } from 'react-icons/io5';
 import { MdQuestionAnswer } from 'react-icons/md';
@@ -18,7 +19,7 @@ const routes = [
     {
       label: "Admin Dashboard",
       icon: <Layout />,
-      link: "/admin/dashboard",
+      link: "/recruiter/dashboard",
     },
     {
       label: "Interships Management",
@@ -51,11 +52,13 @@ const routes = [
 function AdminSidebar() {
     const { pathname } = useLocation();
      const navigate = useNavigate();
-  const { signout } = useAuth(); // Get signout function from your auth context
+  const { signout, setSelectedRole } = useAuth(); // Get signout function from your auth context
 
   const handleLogout = () => {
-    signout(); // Call your logout function
-    navigate("/"); // Redirect to home page
+   signout(); // Call your logout function
+      toast.success('Logout successful');
+      navigate("/"); // Redirect to home page
+      setSelectedRole('')
   };
 
     return (

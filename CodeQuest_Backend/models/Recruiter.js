@@ -30,6 +30,12 @@ const RecruiterSchema = new mongoose.Schema({
     required: true, 
    
   },
+  role: {
+    type: String,
+   
+    default:'recruiter'
+   
+  },
   createdAt: {
     type: Date,
     default: Date.now

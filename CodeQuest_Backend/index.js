@@ -1,3 +1,5 @@
+
+
 const express = require('express')
 const app = express();
 const connectToMongoDB = require('./connection')
@@ -9,7 +11,7 @@ const cors = require('cors')
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-output.json');
-
+require('dotenv').config(); 
 
 
 const PORT = 3001;
@@ -36,7 +38,7 @@ app.use(express.json());
 
 
 app.use('/api/v1/auth', AuthRouter )
-app.use('/api/v1/auth/signup', AuthRouter )
+app.use('/api/v1/auth/recruiter', AuthRouter )
 app.use('/api/v1/auth/companies', AuthRouter )
 app.use('/api/v1/createtest', createtestRouter)
 app.use('/api/v1/question', questionRouter)

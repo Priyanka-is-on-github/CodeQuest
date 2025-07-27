@@ -50,7 +50,7 @@ const RecruiterSignup = () => {
       <div className="mt-8 text-center">
         <p className="text-gray-600">
           Already have an account?{' '}
-          <a href="/login" className="text-blue-600 hover:text-blue-500">
+          <a href="/recruiter/signin" className="text-blue-600 hover:text-blue-500">
             Sign in
           </a>
         </p>

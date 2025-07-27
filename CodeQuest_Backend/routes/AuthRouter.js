@@ -1,15 +1,14 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
-const { setUser } = require("../service/auth");
+
 
 const router = express.Router();
 
 
 const { Developersignup, Developersignin, VerifyEmail, ResendVerificationCode } = require("../controllers/AuthController");
-const signinValidation = require("../middlewares/signinValidation");
+const {signinValidation, RecruiterValidation} = require("../middlewares/signinValidation");
 const SearchCompanies = require("../controllers/SearchCompanies");
 const {CreateCompanies, VerifyCompany} = require("../controllers/CreateCompanies");
-const RecruiterSignup = require("../controllers/RecruiterSignup");
+const {RecruiterSignup, RecruiterSignin} = require("../controllers/RecruiterSignup");
 
 
 
@@ -23,7 +22,8 @@ router.post('/create', CreateCompanies);
 router.post('/verifyCompany', VerifyCompany);
 
 
-router.post('/recruiter', RecruiterSignup);
+router.post('/createAccount', RecruiterSignup);
+router.post('/recruitersignIn',RecruiterValidation, RecruiterSignin);
 
 
 

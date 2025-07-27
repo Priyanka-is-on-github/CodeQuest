@@ -7,7 +7,7 @@ const SigninSchema = Yup.object({
    
 })
 
-const RecruiterSigninSchema = Yup.object({
+const RecruiterSigninSchema = Yup.object().shape({
    
   email: Yup.string()
     .required('Work email is required')
@@ -35,4 +35,4 @@ const RecruiterSigninSchema = Yup.object({
    
 })
 
-export default {SigninSchema, RecruiterSigninSchema};
+export  {SigninSchema, RecruiterSigninSchema};

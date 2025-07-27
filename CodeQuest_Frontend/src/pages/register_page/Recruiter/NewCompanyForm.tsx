@@ -98,7 +98,7 @@ const NewCompanyForm = ({ company }: { company: CompanyName }) => {
     validationSchema: RecruiterValidationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await fetch('http://localhost:3001/api/v1/auth/signup/recruiter', {
+        const response = await fetch('http://localhost:3001/api/v1/auth/recruiter/createAccount/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ const NewCompanyForm = ({ company }: { company: CompanyName }) => {
         });
         
         if (response.ok) {
-          navigate(`/signin/${selectedRole}`, { state: { welcome: true } });
+          navigate(`/${selectedRole}/signin`, { state: { welcome: true } });
         }
       } catch (error) {
         console.error('Error:', error);

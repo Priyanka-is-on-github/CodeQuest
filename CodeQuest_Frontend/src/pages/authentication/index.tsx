@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaCode, FaUserTie, FaArrowRight } from 'react-icons/fa';
 import { useAuth } from '@/context/AuthProvider';
+import toast from 'react-hot-toast';
 
 function Authentication() {
 const {selectedRole, setSelectedRole} = useAuth();
@@ -13,12 +14,12 @@ const {selectedRole, setSelectedRole} = useAuth();
   };
 
   const proceedToAuth = () => {
-    if (selectedRole === 'developer') {
+    if (selectedRole === 'developer' ) {
       navigate(`/signup/${selectedRole}`);
    
     }
     else{
-      navigate('/signup/recruiter');
+      navigate('/recruiter/signup');
     }
   };
 
@@ -102,12 +103,33 @@ const {selectedRole, setSelectedRole} = useAuth();
 
           <p className="mt-6 text-gray-500 text-sm">
             Already have an account?{' '}
-            <a 
-              href="/login" 
+           {selectedRole === ''?(
+
+                <span
+                className='text-blue-600 hover:underline font-medium cursor-pointer'
+                onClick={()=> toast('Please select your role first')}
+                
+                > Sign in</span>
+              
+            ): selectedRole === 'developer'?(
+
+               <a 
+              href={`/signin/${selectedRole}`}
               className="text-blue-600 hover:underline font-medium"
             >
               Sign in
             </a>
+            ):(
+
+
+               <a 
+              href={`/${selectedRole}/signin`}
+              className="text-blue-600 hover:underline font-medium"
+            >
+              Sign in
+            </a>
+            )}
+           
           </p>
         </div>
       </div>

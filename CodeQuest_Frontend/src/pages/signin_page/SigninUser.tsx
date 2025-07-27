@@ -9,7 +9,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import { useState } from "react";
-import SigninSchema from "./SigninValidationSchema";
+import {SigninSchema} from "./SigninValidationSchema";
 import { useAuth } from "@/context/AuthProvider";
 
 

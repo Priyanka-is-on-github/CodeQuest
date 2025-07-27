@@ -46,7 +46,7 @@ const CompanySearch = ({ onCompanySelect }: any) => {
     }
   }, [query]);
 
-console.log('results=', results)
+
  
   return (
     <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
