@@ -113,10 +113,8 @@ const router = createBrowserRouter([
       element: <ProtectedRoutes requireRole={'recruiter'}><AdminDashboard/></ProtectedRoutes>,
       errorElement: <Error />,
     },
-    
-  
     {
-      path: "/admin/intershipsmanagement",
+      path: "/recruiter/intershipsmanagement",
       element: <IntershipManagement/>,
       errorElement: <Error />,
     },

@@ -34,7 +34,7 @@ const { pathname } = useLocation();
 };
 
  
-console.log('user=', user)
+
   return (
     
    <nav className="hidden md:flex items-center space-x-8 ">

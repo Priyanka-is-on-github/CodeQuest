@@ -24,7 +24,7 @@ const routes = [
     {
       label: "Interships Management",
       icon: <TabletSmartphone />,
-      link: "/admin/intershipsmanagement",
+      link: "/recruiter/intershipsmanagement",
     },
     {
       label: "Handle user",

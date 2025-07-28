@@ -1,9 +1,9 @@
-import LineChart from "@/_components/LineChart";
-import {  NewIntershipForm } from "@/_components/QuestionsComponent/NewInternshipForm";
-import { Button } from "@/components/ui/button";
+
+import  NewIntershipForm  from "@/_components/QuestionsComponent/NewInternshipForm";
+
 import AdminLayout from "@/layout/AdminLayout";
 import { BarChart, PieChart } from "lucide-react";
-import React from "react";
+
 import { Link } from "react-router-dom";
 
 function AdminDashboard() {
@@ -84,7 +84,7 @@ function AdminDashboard() {
             {recentActivities.map(activity => (
               <div key={activity.id} className="flex items-start p-3 hover:bg-gray-50 rounded-lg transition-colors">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
-                  {activity.icon || '👤'}
+                  {activity?.icon || '👤'}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900 truncate">
