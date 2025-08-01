@@ -21,9 +21,10 @@ import { cn } from "@/lib/utils";
 import Editor from './Editor'
 import Preview from'./Preview'
 
-interface ChapterDescriptionFormProps {
+interface QuestionDescriptionFormProps {
   description: string;
-  setChapterDetail: any;
+  setQuestionDetail: any;
+  internshipId:string | null,
 }
 
 const formSchema = z.object({
@@ -32,14 +33,16 @@ const formSchema = z.object({
 
 const QuestionDescriptionForm = ({
   description,
-  setChapterDetail
-}: ChapterDescriptionFormProps) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const params = useParams();
+  setQuestionDetail,
+ internshipId
 
- const location = useLocation();
- const queryParams = new URLSearchParams(location.search)
- const testid = queryParams.get('testId')
+}: QuestionDescriptionFormProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+//   const params = useParams();
+
+//  const location = useLocation();
+//  const queryParams = new URLSearchParams(location.search)
+//  const internshipid = queryParams.get('internshipId')
 
  const { pathname } = useLocation();
    const dificulty = pathname.split('/')[3]
@@ -58,7 +61,7 @@ const QuestionDescriptionForm = ({
  
 
      const request = {  
-      testId: testid,
+      internshipId: internshipId,
       title:null,
       description:values.description,
      
@@ -77,17 +80,24 @@ const QuestionDescriptionForm = ({
            body: JSON.stringify(request),
          }
        );
-       const updatedQuestionDescription = await response.json();
+       const result = await response.json();
       
-      console.log('up=', updatedQuestionDescription)
+    
       
 
-      setChapterDetail(updatedQuestionDescription);
+      setQuestionDetail(
+        
+        prev=>({
+          ...prev, questionDescription: result.questionDescription
+        })
+       );
+   
 
       toast.success("Description updated");
       toggleEdit();
     } catch (error) {
       toast.error("Something went wrong");
+  
     }
   };
 
@@ -102,6 +112,10 @@ const QuestionDescriptionForm = ({
 
     form.reset({ description: description });
   }, [form, description]);
+
+//   useEffect(()=>{
+// setCompletedFields((prev:number)=> prev+1)
+//   },[])
 
   return (
     <div className="mt-6 border p-4 bg-slate-100"> 

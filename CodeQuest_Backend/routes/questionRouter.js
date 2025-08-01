@@ -1,19 +1,24 @@
 const express = require("express");
 const Question = require("../models/question");
+const mongoose = require('mongoose');
+const { Types } = require('mongoose');
+const Example = require("../models/example");
 
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  const { dificulty } = req.query;
+  const { difficulty } = req.query;
 
-  const { testId, title, description } = req.body;
+  const { internshipId, title, description } = req.body;
+
+
 
   try {
     const response = await Question.create({
-      testId,
+      internshipId,
       questionTitle: title,
       questionDescription: description,
-      questionDificulty: dificulty,
+      questionDificulty: difficulty,
     });
 
     res.status(201).json(response._id);
@@ -24,10 +29,10 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/get", async (req, res) => {
-  const { testId } = req.query;
+  const { internshipId} = req.query;
 
   const allQuestion = await Question.find({
-    testId,
+    internshipId,
   });
 
  
@@ -36,18 +41,20 @@ router.get("/get", async (req, res) => {
 });
 
 router.post("/questiondetail", async (req, res) => {
-  const { dificulty } = req.query;
+  const { difficulty } = req.query;
 
-  const { testId, title, description } = req.body;
+  const { internshipId, title, description } = req.body;
 
-   if (!mongoose.Types.ObjectId.isValid(testId)) {
+
+
+   if (!mongoose.Types.ObjectId.isValid(internshipId)) {
       return res.status(400).json({ error: 'Invalid test ID format' });
     }
 
   try {
     const prevQuestionDetail = await Question.findOne({
-      testId: new mongoose.Types.ObjectId(testId),
-      questionDificulty: dificulty,
+      internshipId: new mongoose.Types.ObjectId(internshipId),
+      questionDificulty: difficulty,
     });
 
     const updatedQuestionDetail = {
@@ -59,13 +66,14 @@ router.post("/questiondetail", async (req, res) => {
     };
 
     const response = await Question.findOneAndUpdate(
-      { testId: new mongoose.Types.ObjectId(testId), questionDificulty: dificulty },
+      { internshipId: new mongoose.Types.ObjectId(internshipId), questionDificulty: dificulty },
       {
         questionTitle: updatedQuestionDetail.questionTitle,
         questionDescription: updatedQuestionDetail.questionDescription,
       },
       { new: true }
     );
+
 
     res.status(201).json(response);
   } catch (error) {
@@ -74,17 +82,47 @@ router.post("/questiondetail", async (req, res) => {
 });
 
 router.get("/questiondetail", async (req, res) => {
-  const { dificulty, testId } = req.query;
+  const { difficulty, internshipId } = req.query;
+
+
+  // Validate query parameters
+  if (!difficulty || !internshipId) {
+    return res.status(400).json({
+      success: false,
+      message: 'Both difficulty and internshipId are required'
+    });
+  }
 
   try {
-    const response = await Question.findOne({
-      testId,
-      questionDificulty: dificulty,
+    const question = await Question.findOne({
+      internshipId,
+      questionDificulty: difficulty // Fixed typo from "questionDificulty"
+    }).lean();
+
+    if (!question) {
+      return res.status(404).json({
+        success: false,
+        message: 'Question not found'
+      });
+    }
+
+    const examples = await Example.find({ 
+      questionId: question._id 
+    }).lean();
+
+    res.status(200).json({
+      success: true,
+      response: question,
+      examples
     });
 
-    res.status(200).json(response);
   } catch (error) {
-    console.log(error);
+    console.error('Error in /questiondetail:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: error.message
+    });
   }
 });
 module.exports = router;

@@ -124,20 +124,11 @@ const router = createBrowserRouter([
       errorElement: <Error />,
     },
     {
-      path: "/admin/questionmanagement/easy",
+      path: "/admin/questionmanagement/:dificulty",
       element: <Question/>,
       errorElement: <Error />,
     },
-    {
-      path: "/admin/questionmanagement/medium",
-      element: <Question/>,
-      errorElement: <Error />,
-    },
-    {
-      path: "/admin/questionmanagement/hard",
-      element: <Question/>,
-      errorElement: <Error />,
-    },
+   
   
    
   

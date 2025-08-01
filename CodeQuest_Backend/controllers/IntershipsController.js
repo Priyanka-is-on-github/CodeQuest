@@ -66,4 +66,23 @@ const getInternships = async(req, res)=>{
         })
     }
 }
-module.exports ={ IntershipsController, getInternships};
+const getInternshipLogo = async(req, res)=>{
+
+    const {companyName} = req.query;
+    try {
+        const response = await InternshipModel.findOne({
+            companyName
+        })
+
+      
+      res.status(200).json({logo:response.companyLogo})
+
+    } catch (error) {
+         res.status(500).json({
+            message: error.message,
+            success:false,
+            msg:'Internal server error'
+        })
+    }
+}
+module.exports ={ IntershipsController, getInternships, getInternshipLogo};

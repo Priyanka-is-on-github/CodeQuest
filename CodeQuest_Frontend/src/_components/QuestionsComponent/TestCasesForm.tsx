@@ -30,15 +30,6 @@ const TestCasesForm = () => {
     append({ input: '', output: '', explanation: '', isPublic: true });
   };
 
-  const moveTestCase = (index: number, direction: 'up' | 'down') => {
-    if (
-      (direction === 'up' && index === 0) ||
-      (direction === 'down' && index === fields.length - 1)
-    ) {
-      return;
-    }
-    swap(index, direction === 'up' ? index - 1 : index + 1);
-  };
 
   return (
     <div className="space-y-6">
@@ -77,22 +68,8 @@ const TestCasesForm = () => {
               </div>
 
               <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => moveTestCase(index, 'up')}
-                  disabled={index === 0}
-                  className="text-gray-500 hover:text-gray-700 disabled:opacity-30"
-                >
-                  <ChevronUp className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => moveTestCase(index, 'down')}
-                  disabled={index === fields.length - 1}
-                  className="text-gray-500 hover:text-gray-700 disabled:opacity-30"
-                >
-                  <ChevronDown className="h-4 w-4" />
-                </button>
+                
+                
                 <button
                   type="button"
                   onClick={() => remove(index)}

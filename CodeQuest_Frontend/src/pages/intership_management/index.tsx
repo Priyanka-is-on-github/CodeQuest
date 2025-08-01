@@ -51,7 +51,7 @@ const previousInternships = internships.filter(internship => {
   return new Date(internship.endDateTime) < new Date();
 });
 
-  console.log(activeInternships, upcomingInternships, previousInternships)
+  
   const displayedInternships = 
     activeTab === 'active' ? activeInternships :
     activeTab === 'upcoming' ? upcomingInternships :
@@ -205,7 +205,7 @@ const previousInternships = internships.filter(internship => {
                   {/* Action Buttons */}
                   <div className="mt-6 flex space-x-2">
                     <Link 
-                      to={`/admin/questionmanagement?testId=${internship._id}`}
+                      to={`/admin/questionmanagement?internshipId=${internship._id}`}
                       className="flex-1"
                     >
                       <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">

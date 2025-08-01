@@ -5,6 +5,8 @@ import { ArrowLeft } from "lucide-react";
 
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate,  } from "react-router-dom";
+import Question from "./Question";
+import QuestionActions from "@/_components/QuestionsComponent/QuestionActions";
 // import {htmlToText} from 'html-to-text';
 
 function QuestionManagement() {
@@ -14,10 +16,10 @@ function QuestionManagement() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 const navigate = useNavigate()
-  const testId = queryParams.get("testId");
+  const internshipId = queryParams.get("internshipId");
 
   const request = {
-    testId,
+   internshipId,
     title: null,
     description: null,
   };
@@ -27,10 +29,11 @@ const navigate = useNavigate()
     { level: 'medium', label: 'Medium', color: 'bg-yellow-100 text-yellow-800' },
     { level: 'hard', label: 'Hard', color: 'bg-red-100 text-red-800' }
   ];
-  const handleQuestion = async (dificulty: string) => {
+  const handleQuestion = async (difficulty: string) => {
+
     try {
      const response =  await fetch(
-        `http://localhost:3001/api/v1/question?dificulty=${dificulty}`,
+        `http://localhost:3001/api/v1/question?difficulty=${difficulty}`,
         {
           method: "POST",
           headers: {
@@ -42,8 +45,8 @@ const navigate = useNavigate()
 
     const  questionId = await response.json()
    
-  
-     navigate(`/admin/questionmanagement/easy?testId=${testId}&questionId=${questionId}`)
+ 
+     navigate(`/admin/questionmanagement/${difficulty}?internshipId=${internshipId}&questionId=${questionId}`)
 
     } catch (error) {
       console.log(error);
@@ -51,19 +54,21 @@ const navigate = useNavigate()
   };
 
 
-  const handleEdit =async(dificulty:string)=>{
+  const handleEdit =async(difficulty:string)=>{
 
+   
     try {
      
 
       const response = await fetch(
-        `http://localhost:3001/api/v1/question/questiondetail?dificulty=${dificulty}&testId=${testId}`
+        `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}&internshipId=${internshipId}`
       );
 
       const questionId = await response.json();
 
+    const id= questionId.response._id;
   
-       navigate(`/admin/questionmanagement/easy?testId=${testId}&questionId=${questionId._id}`)
+       navigate(`/admin/questionmanagement/${difficulty}?internshipId=${internshipId}&questionId=${id}`)
 
     } catch (error) {
       console.log(error)
@@ -75,13 +80,13 @@ const navigate = useNavigate()
   useEffect(() => {
     (async () => {
       try {
-         // Verify testId is a valid 24-character hex string
-      if (!testId || !/^[0-9a-fA-F]{24}$/.test(testId)) {
-        console.error('Invalid testId format');
+         // VerifyinternshipId is a valid 24-character hex string
+      if (!internshipId || !/^[0-9a-fA-F]{24}$/.test(internshipId)) {
+        console.error('InvalidinternshipId format');
         return;
       }
         const response = await fetch(
-          `http://localhost:3001/api/v1/question/get?testId=${testId}`
+          `http://localhost:3001/api/v1/question/get?internshipId=${internshipId}`
         );
 
         const allQuestion = await response.json();
@@ -99,7 +104,7 @@ const navigate = useNavigate()
         console.log(error);
       }
     })();
-  }, [testId]);
+  }, [internshipId]);
 
   return (
         <AdminLayout>
@@ -107,14 +112,20 @@ const navigate = useNavigate()
         {/* Header with back button */}
         <div className="flex items-center justify-between">
           <Link
-            to="/admin/internshipsmanagement"
+            to="/recruiter/intershipsmanagement"
             className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Internships
           </Link>
           <h2 className="text-2xl font-bold text-gray-800">Question Management</h2>
-          <div></div> {/* Empty div for alignment */}
+
+          {/* <QuestionActions
+                        disabled={false}
+                        ispublished={false}
+                        // setQuestionDetail={setQuestionDetail}
+                      /> */}
+      
         </div>
 
         {/* Difficulty cards grid */}
@@ -122,6 +133,9 @@ const navigate = useNavigate()
           {difficultyLevels.map(({ level, label, color }) => {
             const question = updateButton.find(item => item.dificulty === level);
             const hasQuestion = updateButton.some(item => item.dificulty === level);
+
+            console.log('hasq=',hasQuestion)
+            console.log('q=',question)
 
             return (
               <div 

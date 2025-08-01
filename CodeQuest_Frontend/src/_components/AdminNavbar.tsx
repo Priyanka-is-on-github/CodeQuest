@@ -2,10 +2,30 @@ import { useAuth } from "@/context/AuthProvider";
 import { IoPersonCircle } from "react-icons/io5";
 import Notification from "./Notification";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function AdminNavbar() {
-  const { user } = useAuth();
+  const { user, selectedRole } = useAuth();
   const navigate = useNavigate();
+   const [internshipLogo, setInternshipLogo] = useState('');
+  
+   useEffect(() => {
+      const fetchInternshipLogo = async () => {
+       
+        try {
+          const response = await fetch(`http://localhost:3001/api/v1/internships/getinternshipLogo?companyName=${encodeURIComponent(user.companyName)}`);
+          const {logo} = await response.json();
+       
+          console.log(logo)
+          setInternshipLogo(logo);
+        } catch (error) {
+          console.error('Error fetching internshipLogo:', error);
+        } 
+      };
+  
+      fetchInternshipLogo();
+    }, []);
+  
 
   return (
     <div className="sticky top-0 z-50 w-full border-b bg-white shadow-sm">
@@ -14,11 +34,11 @@ function AdminNavbar() {
         {user?.companyName && (
           <div 
             className="flex items-center p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition"
-            onClick={() => navigate('/dashboard')} // Add your desired navigation path
+            // onClick={() => navigate('/dashboard')} // Add your desired navigation path
           >
-            {user.companyLogo ? (
+            {internshipLogo ? (
               <img 
-                src={user.companyLogo}
+                src={internshipLogo}
                 alt={user.companyName}
                 className="w-8 h-8 object-contain rounded-md mr-3"
               />
@@ -81,7 +101,7 @@ function AdminNavbar() {
               </div>
             ) : (
               <button 
-                onClick={() => navigate('/login')}
+                // onClick={() => navigate(`/signin/${selectedRole}`)}
                 className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
               >
                 Sign In

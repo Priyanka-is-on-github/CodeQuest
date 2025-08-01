@@ -7,6 +7,7 @@ const AuthRouter = require('./routes/AuthRouter')
 const questionRouter = require('./routes/questionRouter')
 const createtestRouter = require('./routes/createtest')
 const exampleRouter = require('./routes/example')
+const testcaseRouter = require('./routes/example')
 const IntershipsRouter = require('./routes/IntershipsRouter')
 const cors = require('cors')
 
@@ -44,8 +45,9 @@ app.use('/api/v1/auth/companies', AuthRouter )
 app.use('/api/v1/internships', IntershipsRouter )
 
 // app.use('/api/v1/createtest', createtestRouter)
-// app.use('/api/v1/question', questionRouter)
-// app.use('/api/v1/example', exampleRouter)
+app.use('/api/v1/question', questionRouter)
+app.use('/api/v1/examples', exampleRouter)
+app.use('/api/v1/testcase', testcaseRouter)
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.listen(PORT, ()=>{

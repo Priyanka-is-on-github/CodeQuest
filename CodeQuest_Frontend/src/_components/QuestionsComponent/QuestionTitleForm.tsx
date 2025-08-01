@@ -18,9 +18,10 @@ import { useLocation, useParams } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 
-type ChapterTitleFormProps= { 
+type QuestionTitleFormProps= { 
   title:string;
-  setQuestionDetail: any,
+  setQuestionDetail: any;
+internshipId:string | null,
 }
 
 const formSchema = z.object({
@@ -28,14 +29,11 @@ const formSchema = z.object({
 });
 
 
-function QuestionTitleForm({ title, setQuestionDetail }: ChapterTitleFormProps) {
+function QuestionTitleForm({ title, setQuestionDetail, internshipId}: QuestionTitleFormProps) {
   const [isEditing, setIsEditing] = useState(false);
   const { pathname } = useLocation();
    const dificulty = pathname.split('/')[3]
 
-   const location = useLocation()
-   const queryParams = new URLSearchParams(location.search)
-   const testid = queryParams.get("testId")
 
   const form = useForm<z.infer<typeof formSchema>>({  
     resolver: zodResolver(formSchema),
@@ -53,7 +51,7 @@ function QuestionTitleForm({ title, setQuestionDetail }: ChapterTitleFormProps) 
    
     const request = {  
      
-      testId: testid,
+      internshipId: internshipId,
      title: values.title,
      description: null,
    
@@ -71,11 +69,18 @@ function QuestionTitleForm({ title, setQuestionDetail }: ChapterTitleFormProps) 
            body: JSON.stringify(request),
          }
        );
-       const updatedQuestionTitle = await response.json();
+       const result = await response.json();
       
-      
- 
-       setQuestionDetail(updatedQuestionTitle);
+     
+
+
+       setQuestionDetail(
+        prev=>({
+          ...prev,  questionTitle:result.questionTitle
+        })
+        
+        );
+    
  
        toast.success("Title updated");
        toggleEdit();

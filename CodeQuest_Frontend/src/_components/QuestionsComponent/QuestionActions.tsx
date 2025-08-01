@@ -13,17 +13,23 @@ type NewChapterDetail = {
   isfree: string;
   ispublished: boolean;
 };
-interface ChapterActionProps {
+
+
+interface QuestionActionProps {
   disabled: boolean;
   ispublished: boolean;
-  setQuestionDetail: string;
+  internshipId:string | null;
+  questionId:string |null;
+  // setQuestionDetail: string;
 }
 
-const ChapterActions = ({
+const QuestionActions = ({
   disabled,
   ispublished,
-  setQuestionDetail,
-}: ChapterActionProps) => {
+  internshipId,
+  questionId,
+  // setQuestionDetail,
+}: QuestionActionProps) => {
   const navigate = useNavigate();
   const params = useParams();
 
@@ -75,22 +81,22 @@ const ChapterActions = ({
     try {
       setIsLoading(true);
       await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/api/v1/courses/chapterdelete/${params.chapterid}`,
+        `http://localhost:3001/api/v1/question/questiondelete?internshipId=${internshipId}&questionId=${questionId}`,
         {
           method: "DELETE",
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify({ courseid: params.id }),
+        
         }
       );
 
-      toast.success("Chapter deleted");
-      navigate(`/teacher/courses/${params.id}`);
+      toast.success("Internship deleted");
+      navigate(`/admin/questionmanagement?internshipId=${internshipId}`);
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); 
     }
   };
 
@@ -113,4 +119,4 @@ const ChapterActions = ({
     </div>
   );
 };
-export default ChapterActions;
+export default QuestionActions;

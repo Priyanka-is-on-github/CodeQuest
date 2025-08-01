@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const codingQuestionSchema = new mongoose.Schema({
     
-  testId: {
+  internshipId: {
     type: mongoose.Schema.Types.ObjectId,// Assuming testId references a Test document
-    ref: "Test",// Replace "Test" with the actual model name if different
+    ref: "InternshipModel",// Replace "Test" with the actual model name if different
     required: true,
   },
   questionTitle: {
