@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
     const { questionId } = req.query;
     const { examples } = req.body;
 
-    console.log(examples)
+   
 
     if (!questionId || !examples || !Array.isArray(examples)) {
       return res.status(400).json({ 
@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     }
 
     // Delete existing examples for this question
-    // await Example.deleteMany({ questionId });
+    await Example.deleteMany({ questionId });
 
     // Insert new examples
     const createdExamples = await Example.insertMany(
@@ -56,7 +56,12 @@ const objectId = new Types.ObjectId(questionId);
 const examples = await Example.find({ questionId: objectId });
    
 
-   
+      if (!examples.length) {
+      return res.status(200).json({ 
+      success: true,
+      message: 'testcases deleted successfully',
+      });
+    }
     res.status(200).json({ 
       success: true,
       message: 'Example deleted successfully',

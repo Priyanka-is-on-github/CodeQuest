@@ -3,6 +3,7 @@ const Question = require("../models/question");
 const mongoose = require('mongoose');
 const { Types } = require('mongoose');
 const Example = require("../models/example");
+const TestCasesModel= require("../models/testcases");
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.post("/", async (req, res) => {
 
   const { internshipId, title, description } = req.body;
 
-
+// console.log('d=',internshipId, title, description)
 
   try {
     const response = await Question.create({
@@ -43,33 +44,39 @@ router.get("/get", async (req, res) => {
 router.post("/questiondetail", async (req, res) => {
   const { difficulty } = req.query;
 
-  const { internshipId, title, description } = req.body;
+  const { internshipId, title, description, isPublished} = req.body;
 
 
 
-   if (!mongoose.Types.ObjectId.isValid(internshipId)) {
-      return res.status(400).json({ error: 'Invalid test ID format' });
-    }
+  // 1. Validate inputs
+  if (!difficulty || !mongoose.Types.ObjectId.isValid(internshipId)) {
+    return res.status(400).json({ 
+      success: false,
+      error: 'Invalid difficulty or internship ID' 
+    });
+  }
+
+  
 
   try {
     const prevQuestionDetail = await Question.findOne({
-      internshipId: new mongoose.Types.ObjectId(internshipId),
+      internshipId: internshipId,
       questionDificulty: difficulty,
     });
 
+    console.log('p=',prevQuestionDetail)
     const updatedQuestionDetail = {
-      questionTitle: title != null ? title : prevQuestionDetail.questionTitle,
-      questionDescription:
-        description != null
-          ? description
-          : prevQuestionDetail.questionDescription,
+      questionTitle: title != '' ? title : prevQuestionDetail.questionTitle,
+      questionDescription: description != ''? description: prevQuestionDetail.questionDescription,
+      isPublished: isPublished !=false ? isPublished: prevQuestionDetail.isPublished,
     };
 
     const response = await Question.findOneAndUpdate(
-      { internshipId: new mongoose.Types.ObjectId(internshipId), questionDificulty: dificulty },
+      { internshipId: internshipId, questionDificulty: difficulty },
       {
         questionTitle: updatedQuestionDetail.questionTitle,
         questionDescription: updatedQuestionDetail.questionDescription,
+        isPublished: updatedQuestionDetail.isPublished,
       },
       { new: true }
     );
@@ -110,14 +117,19 @@ router.get("/questiondetail", async (req, res) => {
       questionId: question._id 
     }).lean();
 
+    const testcases = await TestCasesModel.find({
+        questionId: question._id 
+    })
+
+
     res.status(200).json({
       success: true,
       response: question,
-      examples
+      examples, testcases
     });
 
   } catch (error) {
-    console.error('Error in /questiondetail:', error);
+    console.error('Error in questiondetail:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error',

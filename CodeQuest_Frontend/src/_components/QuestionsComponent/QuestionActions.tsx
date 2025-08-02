@@ -6,69 +6,96 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ConfirmModal from "./ConfirmModel";
 
-type NewChapterDetail = {
-  title: string;
-  description: string;
-  videourl: string;
-  isfree: string;
-  ispublished: boolean;
-};
 
 
 interface QuestionActionProps {
   disabled: boolean;
   ispublished: boolean;
   internshipId:string | null;
-  questionId:string |null;
-  // setQuestionDetail: string;
+  difficulty:string | null;
+  setQuestionDetail: any;
 }
 
 const QuestionActions = ({
   disabled,
   ispublished,
   internshipId,
-  questionId,
-  // setQuestionDetail,
+ difficulty,
+  setQuestionDetail,
 }: QuestionActionProps) => {
   const navigate = useNavigate();
-  const params = useParams();
+  // const params = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
   const onClick = async () => {
     try {
       setIsLoading(true);
       if (ispublished) {
-        ispublished = true;
-        await fetch(
-          `${import.meta.env.VITE_SERVER_URL}/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}&courseId=${params.id}`,
+    
+
+          const request = {  
+     
+      internshipId: internshipId,
+     title: null,
+     description: null,
+     isPublished:false
+   }
+      const response =  await fetch(
+        `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}`,
           {
-            method: "PUT",
+            method: "POST",
             headers: {
               "Content-type": "application/json",
             },
+            body:JSON.stringify(request)
           }
         );
-        toast.success("Chapter unpublished");
-
-        // setQuestionDetail((prevState) => {
-        //   return { ...prevState, ispublished: false };
-        // });
+      
+          const result = await response.json();
+      
+     
+        setQuestionDetail(
+        (prev: any)=>({
+          ...prev,  isPublished:result.isPublished
+        })
+        
+        );
       } else {
-        ispublished = true;
-        await fetch(
-          `${import.meta.env.VITE_SERVER_URL}/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}&courseId=${params.id}`,
+      
+
+        const request = {  
+     
+      internshipId: internshipId,
+     title: null,
+     description: null,
+     isPublished:true
+   }
+      const response =  await fetch(
+          `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}`,
           {
-            method: "PUT",
+            method: "POST",
             headers: {
               "Content-type": "application/json",
             },
+            body: JSON.stringify(request)
           }
         );
-        toast.success("Chapter published");
 
-        // setQuestionDetail((prevState) => {
-        //   return { ...prevState, ispublished: true };
-        // });
+        const result = await response.json();
+      
+     
+        setQuestionDetail(
+        (prev: any)=>({
+          ...prev,  isPublished:result.isPublished
+        })
+        
+        );
+       
+ toast.success(`${difficulty} Question published`);
+        
+       
+
+        
       }
     } catch (error) {
       toast.error("Something went wrong");
@@ -78,26 +105,26 @@ const QuestionActions = ({
   };
 
   const onDelete = async () => {
-    try {
-      setIsLoading(true);
-      await fetch(
-        `http://localhost:3001/api/v1/question/questiondelete?internshipId=${internshipId}&questionId=${questionId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-type": "application/json",
-          },
+    // try {
+    //   setIsLoading(true);
+    //   await fetch(
+    //     `http://localhost:3001/api/v1/question/questiondelete?internshipId=${internshipId}&questionId=${questionId}`,
+    //     {
+    //       method: "DELETE",
+    //       headers: {
+    //         "Content-type": "application/json",
+    //       },
         
-        }
-      );
+    //     }
+    //   );
 
-      toast.success("Internship deleted");
-      navigate(`/admin/questionmanagement?internshipId=${internshipId}`);
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false); 
-    }
+    //   toast.success("Internship deleted");
+    //   navigate(`/admin/questionmanagement?internshipId=${internshipId}`);
+    // } catch (error) {
+    //   toast.error("Something went wrong");
+    // } finally {
+    //   setIsLoading(false); 
+    // }
   };
 
   return (

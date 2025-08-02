@@ -38,14 +38,10 @@ const QuestionDescriptionForm = ({
 
 }: QuestionDescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-//   const params = useParams();
 
-//  const location = useLocation();
-//  const queryParams = new URLSearchParams(location.search)
-//  const internshipid = queryParams.get('internshipId')
 
  const { pathname } = useLocation();
-   const dificulty = pathname.split('/')[3]
+   const difficulty = pathname.split('/')[3]
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,8 +58,9 @@ const QuestionDescriptionForm = ({
 
      const request = {  
       internshipId: internshipId,
-      title:null,
+      title:'',
       description:values.description,
+      isPublished:false,
      
     }
 
@@ -71,7 +68,7 @@ const QuestionDescriptionForm = ({
     
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/question/questiondetail?dificulty=${dificulty}`,
+        `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}`,
          {
            method: "POST",
            headers: {
@@ -87,7 +84,7 @@ const QuestionDescriptionForm = ({
 
       setQuestionDetail(
         
-        prev=>({
+       (prev:any)=>({
           ...prev, questionDescription: result.questionDescription
         })
        );

@@ -32,7 +32,7 @@ const formSchema = z.object({
 function QuestionTitleForm({ title, setQuestionDetail, internshipId}: QuestionTitleFormProps) {
   const [isEditing, setIsEditing] = useState(false);
   const { pathname } = useLocation();
-   const dificulty = pathname.split('/')[3]
+   const difficulty = pathname.split('/')[3]
 
 
   const form = useForm<z.infer<typeof formSchema>>({  
@@ -53,14 +53,13 @@ function QuestionTitleForm({ title, setQuestionDetail, internshipId}: QuestionTi
      
       internshipId: internshipId,
      title: values.title,
-     description: null,
-   
-    
+     description: '',
+     isPublished:false,
    }
  
      try {
        const response = await fetch(
-        `http://localhost:3001/api/v1/question/questiondetail?dificulty=${dificulty}`,
+        `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}`,
          {
            method: "POST",
            headers: {
@@ -72,10 +71,8 @@ function QuestionTitleForm({ title, setQuestionDetail, internshipId}: QuestionTi
        const result = await response.json();
       
      
-
-
-       setQuestionDetail(
-        prev=>({
+        setQuestionDetail(
+        (prev: any)=>({
           ...prev,  questionTitle:result.questionTitle
         })
         

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const testcasesSchema = new mongoose({
+const testcasesSchema = new mongoose.Schema({
 
     questionId:{
         type: mongoose.Schema.Types.ObjectId,
@@ -8,14 +8,18 @@ const testcasesSchema = new mongoose({
         ref:'Question'
     },
 
-      testcase:[
-{
-  input :{ type:String, required:true},
-  output: {type:String, required:true},
-  explanation:{type:String, required:true}
-}
-    
-  ] ,
+    input: {
+    type: String,
+    required: true
+  },
+ expected_output: {
+    type: String,
+    required: true
+  },
+  explanation: {
+    type: String,
+    required: true
+  },
     
      createdAt: {
     type: Date,

@@ -23,7 +23,11 @@ const codingQuestionSchema = new mongoose.Schema({
     enum:["easy", 'medium',"hard"],// Restricts values to easy, medium, or hard
     required: true,
   },
-
+isPublished:{
+  type:Boolean,
+  required:true,
+default:false,
+},
   createdAt:{
     type: Date,
     default:Date.now,

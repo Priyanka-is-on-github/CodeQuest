@@ -20,8 +20,8 @@ const navigate = useNavigate()
 
   const request = {
    internshipId,
-    title: null,
-    description: null,
+    title: '',
+    description: '',
   };
 
   const difficultyLevels = [
