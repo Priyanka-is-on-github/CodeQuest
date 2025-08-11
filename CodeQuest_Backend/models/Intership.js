@@ -9,6 +9,10 @@ const IntershipSchema = mongoose.Schema({
   stipend: String,
   internshipImage: String,
   companyLogo: String,
+  isPublished:{
+    type:Boolean,
+    default:false,
+  },
   testDuration: String,
   startDateTime: String,
   endDateTime: String

@@ -1,5 +1,3 @@
-
-
 const express = require('express')
 const app = express();
 const connectToMongoDB = require('./connection')
@@ -9,6 +7,7 @@ const createtestRouter = require('./routes/createtest')
 const exampleRouter = require('./routes/example')
 const testcaseRouter = require('./routes/testcaseRouter')
 const IntershipsRouter = require('./routes/IntershipsRouter')
+const developersRouter = require('./routes/developersRouter')
 const cors = require('cors')
 
 const swaggerUi = require('swagger-ui-express');
@@ -42,7 +41,10 @@ app.use(express.json());
 app.use('/api/v1/auth', AuthRouter )
 app.use('/api/v1/auth/recruiter', AuthRouter )
 app.use('/api/v1/auth/companies', AuthRouter )
+
+
 app.use('/api/v1/internships', IntershipsRouter )
+app.use('/api/v1/developers', developersRouter )
 
 // app.use('/api/v1/createtest', createtestRouter)
 app.use('/api/v1/question', questionRouter)

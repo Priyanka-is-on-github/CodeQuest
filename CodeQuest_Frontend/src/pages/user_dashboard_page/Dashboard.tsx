@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import DashboardLayout from "@/layout/DashboardLayout";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { 
   AcademicCapIcon,
@@ -12,14 +12,32 @@ import {
 import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthProvider";
 import { IoPerson } from "react-icons/io5";
+import { Internship } from "../intership_management";
 
 function Dashboard() {
 const {user} = useAuth();
-
-  const [progressCount, setProgressCount] = useState(60);
+ const [loading, setLoading] = useState(true);
+  const [internships, setInternships] = useState<Internship[]>([]);
   
 
-  const testDate = new Date()
+   useEffect(() => {
+      const fetchInternships = async () => {
+      
+        try {
+          const response = await fetch(`http://localhost:3001/api/v1/developers/internships?email=${user.email}`);
+          const {data} = await response.json();
+       
+      
+          setInternships(data);
+        } catch (error) {
+          console.error('Error fetching internships:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchInternships();
+    },[]);
   return (
    <DashboardLayout>
   {/* Main Content Area */}
@@ -52,7 +70,7 @@ const {user} = useAuth();
     <section id="upcoming" className="py-16 bg-white">
     <div className="container mx-auto px-6">
       <h2 className="text-3xl font-bold text-gray-900 mb-12">
-        <span className="border-b-4 border-blue-500 pb-2">Upcoming Internships</span>
+        <span className="border-b-4 border-blue-500 pb-2">Upcoming test</span>
       </h2>
       
       <div className="bg-indigo-50 rounded-xl p-8 md:p-12 border-2 border-indigo-100">
@@ -68,7 +86,7 @@ const {user} = useAuth();
             </div>
           </div>
        <div className="flex-1 flex items-center justify-end">
-        <Link to='/test/instructions'>
+        <Link to={`/test/instructions/`}>
         
         <Button 
           className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:from-blue-700 hover:to-indigo-800 
@@ -86,7 +104,7 @@ const {user} = useAuth();
  <section id="previous" className="py-10 bg-gray-50">
     <div className="container mx-auto px-6">
       <h2 className="text-3xl font-bold text-gray-900 mb-12">
-        <span className="border-b-4 border-blue-500 pb-2"> Your Previous Internships</span>
+        <span className="border-b-4 border-blue-500 pb-2"> Your Previous </span>
       </h2>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

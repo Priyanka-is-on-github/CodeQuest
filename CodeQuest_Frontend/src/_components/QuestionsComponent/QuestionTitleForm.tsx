@@ -53,7 +53,7 @@ function QuestionTitleForm({ title, setQuestionDetail, internshipId}: QuestionTi
      
       internshipId: internshipId,
      title: values.title,
-     description: '',
+     description: null,
      isPublished:false,
    }
  

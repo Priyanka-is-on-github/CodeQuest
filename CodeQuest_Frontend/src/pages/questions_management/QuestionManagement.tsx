@@ -3,25 +3,31 @@ import { Button } from "@/components/ui/button";
 import AdminLayout from "@/layout/AdminLayout";
 import { ArrowLeft } from "lucide-react";
 
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { Link, useLocation, useNavigate,  } from "react-router-dom";
-import Question from "./Question";
-import QuestionActions from "@/_components/QuestionsComponent/QuestionActions";
+
+import InternshipAction from "@/_components/QuestionsComponent/InternshipAction";
 // import {htmlToText} from 'html-to-text';
+import { useContext } from "react";
+import { InternshipContext } from "@/pages/intership_management";
 
 function QuestionManagement() {
-  const [updateButton, setUpdateButton] = useState<{dificulty:string, title:string}[]>([]);
+  const [updateButton, setUpdateButton] = useState<{difficulty:string, title:string, isPublished:boolean}[]>([]);
+const {setInternships} = useContext(InternshipContext)
 
-
+console.log('updatedbtn=', updateButton)
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 const navigate = useNavigate()
   const internshipId = queryParams.get("internshipId");
+  const isPublished = queryParams.get("isPublished") === 'true';
+
+  
 
   const request = {
    internshipId,
-    title: '',
-    description: '',
+    title: null,
+    description: null,
   };
 
   const difficultyLevels = [
@@ -92,11 +98,13 @@ const navigate = useNavigate()
         const allQuestion = await response.json();
         
         const object = allQuestion.map((question:any) => {
-          return {dificulty:question?.questionDificulty,
-            title:question?.questionTitle
+          return {difficulty:question?.questionDificulty,
+            title:question?.questionTitle,
+            isPublished: question?.isPublished
           };
         });
 
+     
 
         setUpdateButton(object);
 
@@ -106,7 +114,22 @@ const navigate = useNavigate()
     })();
   }, [internshipId]);
 
+
+  const publish = updateButton.filter((data)=>{
+
+    return (data.isPublished)
+  })
+
+const isComplete = ['easy', 'medium', 'hard'].every(difficulty => 
+  updateButton.some(item => 
+    item.difficulty === difficulty && item.isPublished
+  )
+);
+
+ 
   return (
+
+   
         <AdminLayout>
       <div className="p-6 space-y-6">
         {/* Header with back button */}
@@ -120,22 +143,23 @@ const navigate = useNavigate()
           </Link>
           <h2 className="text-2xl font-bold text-gray-800">Question Management</h2>
 
-          {/* <QuestionActions
-                        disabled={false}
-                        ispublished={false}
-                        // setQuestionDetail={setQuestionDetail}
-                      /> */}
+          <InternshipAction
+                        disabled={!isComplete}
+                        
+                         internshipId={internshipId}
+                          ispublished={isPublished}
+                       setInternships={setInternships}
+                      />
       
         </div>
 
         {/* Difficulty cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {difficultyLevels.map(({ level, label, color }) => {
-            const question = updateButton.find(item => item.dificulty === level);
-            const hasQuestion = updateButton.some(item => item.dificulty === level);
+            const question = updateButton.find(item => item.difficulty === level);
+            const hasQuestion = updateButton.some(item => item.difficulty === level);
 
-            console.log('hasq=',hasQuestion)
-            console.log('q=',question)
+            
 
             return (
               <div 
@@ -153,6 +177,13 @@ const navigate = useNavigate()
                     <Badge className={`${color} px-2 py-1 rounded-full text-xs font-medium`}>
                       {label}
                     </Badge>
+
+                    <Badge 
+  variant={question?.isPublished ? "default" : "secondary"}
+  className="rounded-full px-2 py-1 text-xs font-medium"
+>
+  {question?.isPublished ? "Published" : "Draft"}
+</Badge>
                   </div>
 
                   {/* Question content */}
@@ -189,7 +220,7 @@ const navigate = useNavigate()
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-gray-50 p-4 rounded-lg">
               <p className="text-sm text-gray-500">Total Questions</p>
-              <p className="text-2xl font-bold">{updateButton.length}/3</p>
+              <p className="text-2xl font-bold">{publish.length}/3</p>
             </div>
             <div className="bg-gray-50 p-4 rounded-lg">
               <p className="text-sm text-gray-500">Last Updated</p>
@@ -204,7 +235,7 @@ const navigate = useNavigate()
               <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
                 <div 
                   className="bg-green-600 h-2.5 rounded-full" 
-                  style={{ width: `${(updateButton.length / 3) * 100}%` }}
+                  style={{ width: `${(publish.length / 3) * 100}%` }}
                 ></div>
               </div>
               <p className="text-sm mt-1">
@@ -215,6 +246,7 @@ const navigate = useNavigate()
         </div>
       </div>
     </AdminLayout>
+   
   );
 }
 

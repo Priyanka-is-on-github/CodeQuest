@@ -153,12 +153,12 @@ const TestCaseForm = ({
 
     <div className="mt-6 border p-4 bg-slate-100 rounded-md">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium">Examples</h3>
+            <h3 className="font-medium">Testcases</h3>
             <Button variant="ghost" onClick={toggleEdit}>
               {isEditing ? "Cancel" : (
                 <>
                   <Pencil className="h-4 w-4 mr-2" />
-                  Edit Examples
+                  Edit Testcases
                 </>
               )}
             </Button>

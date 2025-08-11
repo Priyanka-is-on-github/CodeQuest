@@ -156,7 +156,7 @@ const completionPercentage = ((completedFields/4)*100)
               disabled={!isComplete}
               ispublished={Boolean(questionDetail.isPublished)}
               internshipId={internshipId}
-              // questionId={questionId}
+            
               difficulty={difficulty}
               setQuestionDetail={setQuestionDetail}
             />

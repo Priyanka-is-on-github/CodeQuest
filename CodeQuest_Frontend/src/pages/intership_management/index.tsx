@@ -1,13 +1,14 @@
 import AdminLayout from "@/layout/AdminLayout";
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import NewIntershipForm from "@/_components/QuestionsComponent/NewInternshipForm";
 import { format } from 'date-fns';
 import { useAuth } from "@/context/AuthProvider";
+import { Badge } from "@/components/ui/badge";
 
-type Internship = {
+export type Internship = {
   _id: string;
   id: string;
   companyName: string;
@@ -19,6 +20,7 @@ type Internship = {
   internshipImage?: string;
   companyLogo?: string;
   testDuration: string;
+  isPublished:boolean;
   startDateTime: string;
   endDateTime: string;
  
@@ -27,26 +29,39 @@ type Internship = {
   updatedAt?: string;
 };
 
+// Define the context type
+type InternshipContextType = {
+  internships: Internship[];
+  setInternships: React.Dispatch<React.SetStateAction<Internship[]>>;
+};
+
+// Create the context with proper initial values
+export const InternshipContext = createContext<InternshipContextType>({
+  internships: [],  // initial empty array
+  setInternships: () => {}  // dummy function
+});
+
 function IntershipManagement() {
   const [loading, setLoading] = useState(true);
   const [internships, setInternships] = useState<Internship[]>([]);
   const [activeTab, setActiveTab] = useState('active');
   const {user} = useAuth()
 
-  // Filter internships based on status
- // Upcoming internships (start date in future)
+
+
+
 const upcomingInternships = internships.filter(internship => {
   return new Date(internship?.startDateTime) > new Date();
 });
 
-// Active internships (current date between start and end)
+
 const activeInternships = internships.filter(internship => {
   const now = new Date();
   return new Date(internship.startDateTime) <= now && 
          new Date(internship.endDateTime) >= now;
 });
 
-// Previous internships (end date in past)
+
 const previousInternships = internships.filter(internship => {
   return new Date(internship.endDateTime) < new Date();
 });
@@ -75,7 +90,9 @@ const previousInternships = internships.filter(internship => {
   }, []);
 
   return (
+     <InternshipContext.Provider value={{internships,setInternships}}> 
     <AdminLayout>
+
       <div className="p-6">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold text-gray-800 pl-4">Internship Management</h1>
@@ -156,6 +173,14 @@ const previousInternships = internships.filter(internship => {
                       {new Date(`${internship.startDateTime}`) > new Date() ? 'Upcoming' : 
                        new Date(`${internship.endDateTime}`) < new Date() ? 'Completed' : 'Active'}
                     </span>
+
+                  
+                    <Badge
+                        variant={internship?.isPublished ? "default" : "secondary"}
+                             className="rounded-full px-2 py-1 text-xs font-medium"
+                              >
+                               {internship?.isPublished ? "Published" : "Draft"}
+                                          </Badge>
                   </div>
 
                   <p className="text-sm text-gray-600 mb-4 line-clamp-2">{internship.internshipDescription}</p>
@@ -205,7 +230,7 @@ const previousInternships = internships.filter(internship => {
                   {/* Action Buttons */}
                   <div className="mt-6 flex space-x-2">
                     <Link 
-                      to={`/admin/questionmanagement?internshipId=${internship._id}`}
+                      to={`/admin/questionmanagement?internshipId=${internship._id}&isPublished=${internship.isPublished}`}
                       className="flex-1"
                     >
                       <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
@@ -245,6 +270,7 @@ const previousInternships = internships.filter(internship => {
         </div>
       </div>
     </AdminLayout>
+    </InternshipContext.Provider>
   );
 }
 

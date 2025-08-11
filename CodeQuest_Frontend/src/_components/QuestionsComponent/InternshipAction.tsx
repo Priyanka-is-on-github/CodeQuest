@@ -2,32 +2,40 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 
 import toast from "react-hot-toast";
-import { Dispatch, SetStateAction, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import ConfirmModal from "./ConfirmModel";
+import { useContext, useState } from "react";
+import { Internship, InternshipContext } from "@/pages/intership_management";
 
 
 
-interface QuestionActionProps {
+
+interface InternshipActionProps {
   disabled: boolean;
   ispublished: boolean;
   internshipId:string | null;
-  difficulty:string | null;
-  setQuestionDetail: any;
+setInternships: React.Dispatch<React.SetStateAction<Internship[]>>;
+
 }
 
-const QuestionActions = ({
+const InternshipAction = ({
   disabled,
   ispublished,
   internshipId,
- difficulty,
-  setQuestionDetail,
-}: QuestionActionProps) => {
+setInternships
   
- const navigate = useNavigate();
+}: InternshipActionProps) => {
+  
 
+
+ const navigate = useNavigate();
+// const { internships, setInternships } = useContext(InternshipContext);
+
+console.log('ispub=',ispublished)
   const [isLoading, setIsLoading] = useState(false);
-  const onClick = async () => {
+
+   const onClick = async () => {
     try {
       setIsLoading(true);
       if (ispublished) {
@@ -36,12 +44,11 @@ const QuestionActions = ({
           const request = {  
      
       internshipId: internshipId,
-     title: null,
-     description: null,
+    
      isPublished:false
    }
       const response =  await fetch(
-        `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}`,
+        `http://localhost:3001/api/v1/internships/putispublished`,
           {
             method: "POST",
             headers: {
@@ -51,30 +58,30 @@ const QuestionActions = ({
           }
         );
       
-          const result = await response.json();
+           const result = await response.json();
       
      
-        setQuestionDetail(
-        (prev: any)=>({
-          ...prev,  isPublished:result.isPublished
-        })
+        setInternships(prevInternships => 
+        prevInternships.map(internship => 
+          internship._id === internshipId 
+            ? { ...internship, isPublished: (!result.isPublished) } 
+            : internship
+        )
+      );
+       
+ toast.success(` Internship Unpublished`);
         
-        
-        );
-
-         toast.success(`${difficulty} Question Unpublished`);
       } else {
       
 
         const request = {  
      
       internshipId: internshipId,
-     title: null,
-     description: null,
+   
      isPublished:true
    }
       const response =  await fetch(
-          `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}`,
+          `http://localhost:3001/api/v1/internships/putispublished`,
           {
             method: "POST",
             headers: {
@@ -84,22 +91,21 @@ const QuestionActions = ({
           }
         );
 
-        const result = await response.json();
+const result = await response.json();
       
-     
-        setQuestionDetail(
-        (prev: any)=>({
-          ...prev,  isPublished:result.isPublished
-        })
-        
-        );
-       
- toast.success(`${difficulty} Question published`);
-        
-       
+    
+       setInternships(prevInternships => 
+        prevInternships.map(internship => 
+          internship._id === internshipId 
+            ? { ...internship, isPublished: (!result.isPublished) } 
+            : internship
+        )
+      );
 
-        
-      }
+ toast.success(`Internship published`);
+
+      
+   }
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
@@ -107,11 +113,12 @@ const QuestionActions = ({
     }
   };
 
+
   const onDelete = async () => {
     try {
       setIsLoading(true);
       await fetch(
-        `http://localhost:3001/api/v1/question/questiondelete?internshipId=${internshipId}&difficulty=${difficulty}`,
+        `http://localhost:3001/api/v1/internships/deleteinternship?internshipId=${internshipId}`,
         {
           method: "DELETE",
           headers: {
@@ -121,9 +128,9 @@ const QuestionActions = ({
         }
       );
 
-      toast.success(`${difficulty} Question deleted`);
+      toast.success(`Internship deleted`);
 
-      navigate(`/admin/questionmanagement?internshipId=${internshipId}`);
+      navigate(`/recruiter/intershipsmanagement`);
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
@@ -150,4 +157,4 @@ const QuestionActions = ({
     </div>
   );
 };
-export default QuestionActions;
+export default InternshipAction;

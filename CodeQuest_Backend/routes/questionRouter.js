@@ -50,10 +50,7 @@ router.post("/questiondetail", async (req, res) => {
 
   // 1. Validate inputs
   if (!difficulty || !mongoose.Types.ObjectId.isValid(internshipId)) {
-    return res.status(400).json({ 
-      success: false,
-      error: 'Invalid difficulty or internship ID' 
-    });
+    console.log('difficulty not found')
   }
 
   
@@ -64,12 +61,15 @@ router.post("/questiondetail", async (req, res) => {
       questionDificulty: difficulty,
     });
 
-    console.log('p=',prevQuestionDetail)
+  
+
     const updatedQuestionDetail = {
-      questionTitle: title != '' ? title : prevQuestionDetail.questionTitle,
-      questionDescription: description != ''? description: prevQuestionDetail.questionDescription,
-      isPublished: isPublished !=false ? isPublished: prevQuestionDetail.isPublished,
+      questionTitle: title != null ? title : prevQuestionDetail.questionTitle,
+      questionDescription: description != null? description: prevQuestionDetail.questionDescription,
+      isPublished: isPublished ,
     };
+
+  
 
     const response = await Question.findOneAndUpdate(
       { internshipId: internshipId, questionDificulty: difficulty },
@@ -137,4 +137,70 @@ router.get("/questiondetail", async (req, res) => {
     });
   }
 });
+
+
+router.delete('/questiondelete', async(req, res)=>{
+
+  const { difficulty, internshipId } = req.query;
+
+
+  // Validate query parameters
+  if (!difficulty || !internshipId) {
+    return res.status(400).json({
+      success: false,
+      message: 'Both difficulty and internshipId are required'
+    });
+  }
+  try {
+    
+    
+    const question = await Question.findOne({
+      internshipId,
+      questionDificulty: difficulty // Fixed typo from "questionDificulty"
+    }).lean();
+
+   
+    if (!question) {
+      return res.status(404).json({
+        success: false,
+        message: 'Question not found'
+      });
+    }
+
+    const examples = await Example.deleteMany({ 
+      questionId: question._id 
+    }).lean();
+
+    
+  
+    const testcases = await TestCasesModel.deleteMany({
+        questionId: question._id 
+    })
+
+
+    
+   
+
+
+    const questiondeleted = await Question.deleteOne({
+      internshipId,
+      questionDificulty: difficulty
+    })
+
+    console.log('qd=', questiondeleted)
+    res.status(200).json({
+      success: true,
+      msg:'successfully deleted'
+    });
+    
+  } catch (error) {
+    console.error('Error in questiondetail:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: error.message
+    });
+  }
+
+})
 module.exports = router;

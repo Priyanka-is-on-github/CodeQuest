@@ -99,12 +99,12 @@ const router = createBrowserRouter([
       errorElement: <Error />,
     },
     {
-      path: "/compete/internship",
+       path: "/compete/internship/:internshipId",
       element: <InternshipInfoPage/>,
       errorElement: <Error />,
     },
     {
-      path: "/compete/internship/information",
+      path: "/compete/internship/information/:internshipId",
       element: <InformationPage/>,
       errorElement: <Error />,
     },

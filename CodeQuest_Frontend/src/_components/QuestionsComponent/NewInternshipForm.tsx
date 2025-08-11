@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
       stipend: "",
       internshipImage: "",
       companyLogo: "",
+      isPublished:false,
       testDuration: "",
       startDateTime: "",
       endDateTime: "",

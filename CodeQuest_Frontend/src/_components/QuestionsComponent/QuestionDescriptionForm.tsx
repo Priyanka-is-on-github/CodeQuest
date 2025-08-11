@@ -58,7 +58,7 @@ const QuestionDescriptionForm = ({
 
      const request = {  
       internshipId: internshipId,
-      title:'',
+      title:null,
       description:values.description,
       isPublished:false,
      
@@ -110,9 +110,7 @@ const QuestionDescriptionForm = ({
     form.reset({ description: description });
   }, [form, description]);
 
-//   useEffect(()=>{
-// setCompletedFields((prev:number)=> prev+1)
-//   },[])
+
 
   return (
     <div className="mt-6 border p-4 bg-slate-100"> 
