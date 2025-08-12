@@ -79,7 +79,7 @@ const router = createBrowserRouter([
       errorElement: <Error />,
     },
     {
-      path: "/test/instructions",
+      path: "/test/instructions/:id",
       element: <TestPage/>,
       errorElement: <Error />,
     },

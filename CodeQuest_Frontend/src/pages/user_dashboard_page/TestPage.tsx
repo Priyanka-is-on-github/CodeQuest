@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthProvider";
 import DashboardLayout from "@/layout/DashboardLayout";
 import Layout from "@/layout/Layout";
 import {
@@ -6,30 +7,74 @@ import {
   BuildingLibraryIcon,
 } from "@heroicons/react/24/outline";
 import { CalendarIcon, ClockIcon, Link } from "lucide-react";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { IoPerson } from "react-icons/io5";
+import { useNavigate, useParams } from "react-router-dom";
+import { Internship } from "../intership_management";
 
 function TestPage() {
   const testDate = new Date();
 const navigate = useNavigate()
+const {user} = useAuth();
+const {id} = useParams();
+  const [internship, setInternship] = useState<Internship>();
 
   const handleProblems=()=>{
     navigate('/test/problems')
   }
+
+  useEffect(() => {
+      const fetchInternships = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost:3001/api/v1/internships/internshipid?id=${id}`
+          );
+          const { data } = await response.json();
+  
+          console.log('id=', data)
+          setInternship(data);
+        } catch (error) {
+          console.error("Error fetching internships:", error);
+        } 
+      };
+  
+      fetchInternships();
+    }, []);
   return (
     <DashboardLayout>
       {/* Main Content Area */}
       <div className="p-4 w-full md:w-[75%] h-[100vh] overflow-y-auto">
         {/* Welcome Banner with subtle animation */}
-        <div className="flex flex-col md:flex-row border-2 border-blue-100 w-full h-60 mt-2 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 shadow-md hover:shadow-lg transition-all duration-300">
-          <div className="w-full  p-6 flex flex-col justify-center">
-            <p className="text-3xl font-medium">
-              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-800">
-                Frontend Internship
-              </span>
-            </p>
-          </div>
-        </div>
+       <div className="relative w-full h-60 mt-2 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 group">
+  {/* Background Image with Gradient Overlay */}
+  <div className="absolute inset-0">
+    {internship?.internshipImage ? (
+      <img 
+        src={internship.internshipImage} 
+        alt={internship.internshipTitle || "Internship"} 
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+    ) : (
+      <div className="w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600" />
+    )}
+    <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-indigo-900/20" />
+  </div>
+
+  {/* Content */}
+  <div className="relative h-full p-6 flex flex-col justify-center text-white">
+    <h2 className="text-3xl font-bold mb-2 drop-shadow-md">
+      {internship?.internshipTitle}
+    </h2>
+    <p className="text-xl font-medium text-blue-100 drop-shadow-md">
+      {internship?.companyName}
+    </p>
+    
+    {/* Optional: Add button or additional info */}
+    <button className="mt-4 self-start px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30 hover:bg-white/30 transition-colors duration-300">
+      View Details
+    </button>
+  </div>
+</div>
 
         
 
@@ -83,35 +128,37 @@ const navigate = useNavigate()
 
       {/* Sidebar Profile Section */}
       <div className="h-full hidden md:flex flex-col w-[25%] ml-3 mt-2 mr-2 ">
-        {/* Profile Card */}
-        <div className="text-white p-6 bg-gradient-to-br from-blue-900 to-indigo-900 rounded-xl shadow-lg">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="h-16 w-16 rounded-full bg-white flex items-center justify-center text-blue-900 font-bold text-2xl">
-              PK
+          {/* Profile Card */}
+          <div className="text-white p-6 bg-gradient-to-br from-blue-900 to-indigo-900 rounded-xl shadow-lg">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-16 w-16 rounded-full bg-white flex items-center justify-center text-blue-900 font-bold text-2xl">
+                <IoPerson/>
+              </div>
+              <div>
+                <h3 className="font-bold text-xl">{user.name}</h3>
+                <p className="text-sm font-medium text-blue-200">
+                 {user.email}
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-bold text-xl">Priyanka Kumari</h3>
-              <p className="text-sm font-medium text-blue-200">
-                priynkasingh88@gmail.com
-              </p>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <AcademicCapIcon className="h-5 w-5 text-blue-300" />
+                <p className="text-sm font-medium text-blue-100">
+                  Qualification: {user.degree}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <BuildingLibraryIcon className="h-5 w-5 text-blue-300" />
+                <p className="text-sm font-medium text-blue-100">
+                  University: {user.collegeName}
+                </p>
+              </div>
             </div>
           </div>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <AcademicCapIcon className="h-5 w-5 text-blue-300" />
-              <p className="text-sm font-medium text-blue-100">
-                Qualification: B.Tech (Computer Science)
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <BuildingLibraryIcon className="h-5 w-5 text-blue-300" />
-              <p className="text-sm font-medium text-blue-100">
-                University: ABC University
-              </p>
-            </div>
-          </div>
+      
+       
         </div>
-      </div>
     </DashboardLayout>
   );
 }

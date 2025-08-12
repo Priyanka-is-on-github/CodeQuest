@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthProvider";
 import { MoonIcon, SunIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -6,7 +7,7 @@ import { Link } from "react-router-dom";
 function CodingProblems() {
 
  const [darkMode, setDarkMode] = useState(false);
-
+const {user} = useAuth()
   useEffect(() => {
     // Check user's preferred color scheme
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -140,7 +141,7 @@ function CodingProblems() {
             <p className={`text-3xl font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
               Welcome back,{" "}
               <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-800">
-                Priyanka!
+                {user.name}!
               </span>
             </p>
 
