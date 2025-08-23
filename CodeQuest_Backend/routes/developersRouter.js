@@ -57,6 +57,7 @@ router.post("/developer-form", async (req, res) => {
 });
 
 
+
 router.get('/internships', async(req, res)=>{
 
     try {
@@ -77,7 +78,7 @@ const internshipIds = response.map(doc => doc.internshipId);
       _id: { $in: internshipIds }
     });
 
-res.status(201).json({
+res.status(200).json({
       message: "got successfully",
       success: true,
       data: internships
@@ -90,6 +91,26 @@ res.status(201).json({
       msg: "Internal server error",
     });
     }
+})
+
+router.get('/developer-form', async(req, res)=>{
+
+  try {
+    
+    const applicants = await DeveloperFormModel.find()
+
+ res.status(200).json({
+      message: "got successfully",
+      success: true,
+      data: applicants
+    });
+  } catch (error) {
+      res.status(500).json({
+      message: error.message,
+      success: false,
+      msg: "Internal server error",
+    });
+  }
 })
 
 module.exports = router;

@@ -75,8 +75,8 @@ function InternshipInfoPage() {
               {internship?.internshipDescription}
             </p>
 
-            <h2 className="text-2xl font-semibold mb-4">What You'll Learn</h2>
-            {/* <ul className="list-disc pl-6 text-gray-700 space-y-2">
+            {/* <h2 className="text-2xl font-semibold mb-4">What You'll Learn</h2>
+            <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>Build production-ready web applications</li>
               <li>Work with modern tech stack (MERN, GraphQL, etc.)</li>
               <li>Collaborate using Agile methodologies</li>
@@ -121,15 +121,15 @@ function InternshipInfoPage() {
         </div>
 
         {/* Additional Information */}
-        <div className="bg-white shadow rounded-lg p-6">
+        {/* <div className="bg-white shadow rounded-lg p-6">
           <h2 className="text-2xl font-semibold mb-4">Requirements</h2>
-          {/* <ul className="list-disc pl-6 text-gray-700 space-y-2">
+          <ul className="list-disc pl-6 text-gray-700 space-y-2">
             <li>Basic knowledge of JavaScript and web development</li>
             <li>Familiarity with React or similar frameworks</li>
             <li>Ability to commit 20+ hours per week</li>
             <li>Strong problem-solving skills</li>
-          </ul> */}
-        </div>
+          </ul>
+        </div> */}
       </div>
     </Layout>
   );

@@ -8,6 +8,7 @@ const exampleRouter = require('./routes/example')
 const testcaseRouter = require('./routes/testcaseRouter')
 const IntershipsRouter = require('./routes/IntershipsRouter')
 const developersRouter = require('./routes/developersRouter')
+const notificationRouter = require('./routes/notificationRouter')
 const cors = require('cors')
 
 const swaggerUi = require('swagger-ui-express');
@@ -50,6 +51,9 @@ app.use('/api/v1/developers', developersRouter )
 app.use('/api/v1/question', questionRouter)
 app.use('/api/v1/examples', exampleRouter)
 app.use('/api/v1/testcases', testcaseRouter)
+app.use('/api/v1/notifications', notificationRouter)
+
+
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.listen(PORT, ()=>{

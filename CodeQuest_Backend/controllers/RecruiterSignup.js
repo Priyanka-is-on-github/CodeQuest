@@ -79,4 +79,6 @@ if(!isPassEqual)
    
   }
 };
+
+
 module.exports = {RecruiterSignup,RecruiterSignin}

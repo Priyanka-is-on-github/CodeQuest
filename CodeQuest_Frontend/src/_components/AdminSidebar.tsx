@@ -29,7 +29,7 @@ const routes = [
     {
       label: "Handle user",
       icon: <User2Icon/>,
-      link: "/",
+      link: "/recruiter/handleuser",
     },
     
     
@@ -40,11 +40,11 @@ const routes = [
       link: "",
     },
   
-    {
-      icon: <Settings />,
-      label: "Settings",
-      link: "",
-    },
+    // {
+    //   icon: <Settings />,
+    //   label: "Settings",
+    //   link: "",
+    // },
     
    
   ];

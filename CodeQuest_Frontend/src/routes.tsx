@@ -27,6 +27,7 @@ import OTPVerificationPage from "./pages/register_page/Developer/OTPVerification
 import RecruiterSignup from "./pages/register_page/Recruiter/RecruiterSignup";
 import { useAuth } from "./context/AuthProvider";
 import RecruiterSignin from "./pages/signin_page/RecruiterSignin";
+import HandleUser from "./pages/handle_page/HandleUser";
 
 
 const router = createBrowserRouter([
@@ -116,6 +117,11 @@ const router = createBrowserRouter([
     {
       path: "/recruiter/intershipsmanagement",
       element: <IntershipManagement/>,
+      errorElement: <Error />,
+    },
+    {
+      path: "/recruiter/handleuser",
+      element: <HandleUser/>,
       errorElement: <Error />,
     },
     {

@@ -131,7 +131,7 @@ const {user} = useAuth()
                   </Link>
                 </div>
               </div>
-            ))}
+            ))}                                     
           </div>
         </div>
 
