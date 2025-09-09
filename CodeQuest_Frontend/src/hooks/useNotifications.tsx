@@ -1,13 +1,28 @@
 import { useAuth } from '@/context/AuthProvider';
 import { useEffect, useRef, useState } from 'react';
 
+export type NotificationType = {
+ 
+  recruiterId: string;
+  
+  deliveredAt?: string | null; 
+  readAt?: string;
+
+  
+  notification?: {
+    _id: string;
+    message: string;
+    companyName: string;
+    createdAt: string;
+  };
+};
 
 
  function useNotifications({ limit = 4 } = {}) {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<NotificationType[]>([]);
   const [open, setOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
-  const esRef = useRef(null);
+ const esRef = useRef<EventSource | null>(null);
   const {user} = useAuth()
 
  
@@ -25,14 +40,14 @@ import { useEffect, useRef, useState } from 'react';
         const { type, payload } = ev.data || {};
         if (type === 'MARK_ALL_READ') {
           // other tab marked all read — update local state
-          setList(prev => prev.map(i => ({ ...i, readAt: i.readAt || new Date().toISOString() })));
+          setList((prev:any) => prev.map((i:any) => ({ ...i, readAt: i.readAt || new Date().toISOString() })));
           setUnreadCount(0);
         } else if (type === 'NEW_NOTIFICATION') {
           // other tab inserted a new incoming notification — optional
           const r = payload;
-          setList(prev => {
-            const filtered = prev.filter(x => x.recipientId !== r.recipientId);
-            return [{ recipientId: r.recipientId, readAt: r.readAt, deliveredAt: r.deliveredAt, createdAt: r.createdAt, notification: r.notification }, ...filtered].slice(0, limit);
+          setList((prev:any) => {
+            const filtered = prev.filter((x:any) => x.recipientId !== r.recipientId);
+            return [{ recruiterId: r.recruiterId, readAt: r.readAt, deliveredAt: r.deliveredAt, createdAt: r.createdAt, notification: r.notification }, ...filtered].slice(0, limit);
           });
           setUnreadCount(c => c + 1);
         }
@@ -48,7 +63,7 @@ import { useEffect, useRef, useState } from 'react';
         const payload = JSON.parse(e.data);
         const r = payload.recipient;
         const item = {
-          recipientId: r._id,
+          recruiterId: r._id,
           readAt: r.readAt,
           deliveredAt: r.deliveredAt,
           createdAt: r.createdAt,
@@ -56,8 +71,8 @@ import { useEffect, useRef, useState } from 'react';
         };
 
         // Deduplicate and insert on top
-        setList(prev => {
-          const filtered = prev.filter(x => x.recipientId !== item.recipientId);
+        setList((prev:any) => {
+          const filtered = prev.filter((x:any) => x.recruiterId !== item.recruiterId);
           return [item, ...filtered].slice(0, limit);
         });
 
@@ -99,9 +114,9 @@ import { useEffect, useRef, useState } from 'react';
       const res = await fetch(`http://localhost:3001/api/v1/notifications/recent?limit=${limit}&id=${encodeURIComponent(user.id)}`, { credentials: 'include' });
       if (!res.ok) throw new Error('fetch failed');
       const json = await res.json();
- console.log('json=', json)
-      const items = json.notifications.map(n => ({
-        recipientId: n.recipientId,
+
+      const items = json.notifications.map((n:any) => ({
+        recruiterId: n.recruiterId,
         readAt: n.readAt,
         deliveredAt: n.deliveredAt,
         createdAt: n.createdAt,
@@ -146,7 +161,7 @@ import { useEffect, useRef, useState } from 'react';
   // MARK ALL READ: optimistic local changes + server call + BroadcastChannel notify
   async function markAllReadOnOpen() {
     // optimistic UI update
-    setList(prev => prev.map(i => ({ ...i, readAt: i.readAt || new Date().toISOString() })));
+    setList((prev:any) => prev.map((i:any) => ({ ...i, readAt: i.readAt || new Date().toISOString() })));
     setUnreadCount(0);
 
     try {

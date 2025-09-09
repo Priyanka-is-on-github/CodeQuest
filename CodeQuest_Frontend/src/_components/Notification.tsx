@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -10,15 +10,15 @@ import { FaBell } from "react-icons/fa";
 import { IoPersonCircle } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import useNotifications from "@/hooks/useNotifications";
+import { formatDistanceToNow } from "date-fns";
+
 
 
 
 function Notification() {
   const { list, open, setOpen, fetchRecent, unreadCount, markAllReadOnOpen} = useNotifications({ limit: 4 });
 
-  console.log('notificalist=',list)
-  console.log('unreadcount=',unreadCount)
-
+console.log('list=', list)
 
  async function onToggle() {
     if (!open) {
@@ -77,7 +77,7 @@ function Notification() {
                     {notification?.message}
                   </p>
                   <p className="text-xs text-gray-500 mt-1">
-                    {notification?.createdAt}
+                    {notification?.createdAt ? formatDistanceToNow(new Date(notification.createdAt), {addSuffix:true}):""}
                   </p>
                 </div>
                 

@@ -79,17 +79,13 @@ router.get('/recent', async (req, res) => {
     const recruiterId = req.query.id;
     const limit = Number(req.query.limit) || 4;
 
-   
-
-    const recips = await NotificationRecipientModel.find({ recruiterId })
+   const recips = await NotificationRecipientModel.find({ recruiterId })
       .sort({ createdAt: -1 })
       .limit(limit)
       .populate('notificationId');
 
- 
-
     const out = recips.map(r => ({
-      recipientId: r._id,
+      recruiterId: r._id,
       readAt: r.readAt,
       deliveredAt: r.deliveredAt,
      

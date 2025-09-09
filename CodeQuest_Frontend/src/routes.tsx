@@ -28,6 +28,7 @@ import RecruiterSignup from "./pages/register_page/Recruiter/RecruiterSignup";
 import { useAuth } from "./context/AuthProvider";
 import RecruiterSignin from "./pages/signin_page/RecruiterSignin";
 import HandleUser from "./pages/handle_page/HandleUser";
+import NotificationPage from "./pages/notification_page";
 
 
 const router = createBrowserRouter([
@@ -132,6 +133,12 @@ const router = createBrowserRouter([
     {
       path: "/admin/questionmanagement/:dificulty",
       element: <Question/>,
+      errorElement: <Error />,
+    },
+   
+    {
+      path: "/recruiter/notifications",
+      element: <NotificationPage/>,
       errorElement: <Error />,
     },
    

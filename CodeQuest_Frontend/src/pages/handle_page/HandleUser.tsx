@@ -28,8 +28,7 @@ function HandleUser() {
 
   const handleApprove = (applicantId: string) => {
 
-   
-    if (!approvedApplicants.includes(applicantId)) {
+   if (!approvedApplicants.includes(applicantId)) {
       setApprovedApplicants([...approvedApplicants, applicantId]);
       alert(`Applicant approved for test! ID: ${applicantId}`);
     }

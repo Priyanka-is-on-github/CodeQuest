@@ -37,7 +37,7 @@ const routes = [
     {
       label: "Notification",
       icon: <IoNotifications />,
-      link: "",
+      link: "/recruiter/notifications",
     },
   
     // {
