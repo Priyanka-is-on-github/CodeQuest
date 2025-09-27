@@ -1,7 +1,7 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import AdminLayout from '@/layout/AdminLayout';
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Applicant = {
   _id: string;

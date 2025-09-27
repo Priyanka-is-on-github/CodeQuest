@@ -35,6 +35,7 @@ const RecruiterSignin = async (req, res) => {
   const { password } = req.body;
 const user = req.user; // From middleware
  
+console.log('pass=', user)
   try {
 const isPassEqual = await bcrypt.compare(password, user.password)
   

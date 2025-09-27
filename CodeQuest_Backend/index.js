@@ -16,17 +16,14 @@ const swaggerDocument = require('./swagger-output.json');
 require('dotenv').config(); 
 
 
-const PORT = 3001;
-
-
-
-
-
+const PORT = process.env.PORT || 3001;
 
 //connection
-connectToMongoDB('mongodb://127.0.0.1:27017/CodeQuest').then(()=>{
-    console.log('Mongo db is connected')
-}).catch((err)=>console.log('"Mongo Error',err))
+
+connectToMongoDB(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB Atlas is connected'))
+  .catch((err) => console.log('Mongo Error', err));
+
 
 //middleware
 

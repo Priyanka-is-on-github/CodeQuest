@@ -206,7 +206,7 @@ function Home() {
         </div>
         <h3 className="text-xl font-semibold text-center mb-3 text-gray-800">Create Account</h3>
         <p className="text-gray-600 text-center">
-          Sign up with your email and create your developer profile in minutes.
+          Sign up as a Developer or Recruiter and verify your account with OTP for secure access.
         </p>
       </div>
 
@@ -215,9 +215,9 @@ function Home() {
         <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 mx-auto">
           <span className="text-2xl font-bold text-blue-600">2</span>
         </div>
-        <h3 className="text-xl font-semibold text-center mb-3 text-gray-800">Take Coding Test</h3>
+        <h3 className="text-xl font-semibold text-center mb-3 text-gray-800">Role-Based Access</h3>
         <p className="text-gray-600 text-center">
-          Complete our coding challenges in multiple languages within the time limit.
+          Developers access coding challenges, while Recruiters manage internships through protected dashboards.
         </p>
       </div>
 
@@ -226,9 +226,9 @@ function Home() {
         <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 mx-auto">
           <span className="text-2xl font-bold text-blue-600">3</span>
         </div>
-        <h3 className="text-xl font-semibold text-center mb-3 text-gray-800">Get Your Score</h3>
+        <h3 className="text-xl font-semibold text-center mb-3 text-gray-800">Complete Tasks</h3>
         <p className="text-gray-600 text-center">
-          Receive detailed feedback on your performance and areas for improvement.
+          Developers take coding tests; Recruiters review results and manage opportunities in the admin dashboard.
         </p>
       </div>
 
@@ -237,23 +237,76 @@ function Home() {
         <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6 mx-auto">
           <span className="text-2xl font-bold text-blue-600">4</span>
         </div>
-        <h3 className="text-xl font-semibold text-center mb-3 text-gray-800">Land Opportunities</h3>
+        <h3 className="text-xl font-semibold text-center mb-3 text-gray-800">Get Results</h3>
         <p className="text-gray-600 text-center">
-          Get matched with internship opportunities based on your skills and results.
+          Developers receive scores and feedback; Recruiters send emails to successful candidates.
         </p>
       </div>
     </div>
 
-    {/* CTA Button */}
-    <div className="text-center mt-16">
-       <Link 
-            to={getLinkPath()}
-          className="relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-semibold text-white transition-all duration-300 ease-in-out rounded-lg shadow-lg group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-        >
-          <span className="relative z-10">Get Started Now</span>
-          <span className="absolute inset-0 bg-white opacity-10 group-hover:opacity-5 transition-opacity duration-300"></span>
-        </Link>
+    {/* Authentication Flow Section */}
+    <div className="mt-16 bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+      <h3 className="text-2xl font-bold text-center mb-8 text-blue-950">Authentication & Dashboard Features</h3>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Developer Flow */}
+        <div className="bg-blue-50 p-6 rounded-lg">
+          <h4 className="text-xl font-semibold mb-4 text-blue-800">For Developers</h4>
+          <ul className="space-y-3">
+            <li className="flex items-start">
+              <span className="text-blue-600 mr-2">✓</span>
+              <span>Secure OTP verification during registration</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-blue-600 mr-2">✓</span>
+              <span>Access to coding challenges through protected routes</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-blue-600 mr-2">✓</span>
+              <span>Real-time coding test environment with multiple language support</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-blue-600 mr-2">✓</span>
+              <span>Detailed score reports with performance analytics</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-blue-600 mr-2">✓</span>
+              <span>Notification when recruiters view your profile</span>
+            </li>
+          </ul>
+        </div>
+        
+        {/* Recruiter/Admin Flow */}
+        <div className="bg-indigo-50 p-6 rounded-lg">
+          <h4 className="text-xl font-semibold mb-4 text-indigo-800">For Recruiters/Admins</h4>
+          <ul className="space-y-3">
+            <li className="flex items-start">
+              <span className="text-indigo-600 mr-2">✓</span>
+              <span>Admin dashboard with comprehensive analytics</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-indigo-600 mr-2">✓</span>
+              <span>Manage internship postings and applicant tracking</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-indigo-600 mr-2">✓</span>
+              <span>Review coding test scores and developer profiles</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-indigo-600 mr-2">✓</span>
+              <span>Automated email notifications for successful candidates</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-indigo-600 mr-2">✓</span>
+              <span>Protected routes with role-based access control</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
+
+  
+    
   </div>
 </section>
 
