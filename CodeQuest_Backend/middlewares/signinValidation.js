@@ -1,7 +1,7 @@
 
 
 const DeveloperModel = require("../models/Developer");
-const RecruiterModel = require("../models/recruiter");
+const RecruiterModel = require("../models/Recruiter");
 
 
 async function signinValidation(req, res, next) {
