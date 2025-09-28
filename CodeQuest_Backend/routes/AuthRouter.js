@@ -8,7 +8,7 @@ const { Developersignup, Developersignin, VerifyEmail, ResendVerificationCode } 
 const {signinValidation, RecruiterValidation} = require("../middlewares/signinValidation");
 const SearchCompanies = require("../controllers/SearchCompanies");
 const {CreateCompanies, VerifyCompany} = require("../controllers/CreateCompanies");
-const {RecruiterSignup, RecruiterSignin} = require("../controllers/RecruiterSignup");
+const { RecruiterSignin, RecruiterSignup} = require("../controllers/RecruiterSignup");
 
 
 
