@@ -75,7 +75,7 @@ const previousInternships = internships.filter(internship => {
   useEffect(() => {
     const fetchInternships = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/v1/internships/getinternships?companyName=${encodeURIComponent(user.companyName)}`);
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/internships/getinternships?companyName=${encodeURIComponent(user.companyName)}`);
         const {data} = await response.json();
      
         setInternships(data);

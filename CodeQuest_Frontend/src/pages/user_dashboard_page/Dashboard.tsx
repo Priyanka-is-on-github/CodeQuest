@@ -41,7 +41,7 @@ const {user} = useAuth();
       const fetchInternships = async () => {
       
         try {
-          const response = await fetch(`http://localhost:3001/api/v1/developers/internships?email=${user.email}`);
+          const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/developers/internships?email=${user.email}`);
           const {data} = await response.json();
        
       

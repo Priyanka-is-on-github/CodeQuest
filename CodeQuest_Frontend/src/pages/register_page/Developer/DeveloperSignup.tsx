@@ -56,7 +56,7 @@ function DeveloperSignup() {
     const userValues = {...values, role:selectedRole, verificationCode:otpValue}
 
     try {
-      const registeredUser = await fetch('http://localhost:3001/api/v1/auth/signup', {
+      const registeredUser = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'

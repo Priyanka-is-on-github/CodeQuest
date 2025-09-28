@@ -73,7 +73,7 @@ const TestCaseForm = ({
      try {
        setIsLoading(true);
        
-       const response = await fetch(`http://localhost:3001/api/v1/testcases?questionId=${questionId}`, {
+       const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/testcases?questionId=${questionId}`, {
          method: "POST",
          headers: { "Content-Type": "application/json" },
          body: JSON.stringify({ testcases: data.testcases }),
@@ -106,7 +106,7 @@ const TestCaseForm = ({
        if (testcaseId) {
          
          const response = await fetch(
-           `http://localhost:3001/api/v1/testcases?questionId=${questionId}&id=${testcaseId}`,
+           `${import.meta.env.VITE_SERVER_URL}/api/v1/testcases?questionId=${questionId}&id=${testcaseId}`,
            {
              method: "DELETE",
            }

@@ -37,7 +37,7 @@ function SignupUser() {
          setIsSubmitting(true)
       try {
         
-        const response = await fetch('http://localhost:3001/api/v1/auth/signin',{
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/auth/signin`,{
             
             method: 'POST', 
             headers: {
@@ -90,7 +90,7 @@ navigate(redirectPath, {replace:true})
 //         setIsSubmitting(true)
 //       try {
         
-//         const response = await fetch('http://localhost:3001/api/v1/auth/signin',{
+//         const response = await fetch('${import.meta.env.VITE_SERVER_URL}/api/v1/auth/signin',{
             
 //             method: 'POST', 
 //             headers: {

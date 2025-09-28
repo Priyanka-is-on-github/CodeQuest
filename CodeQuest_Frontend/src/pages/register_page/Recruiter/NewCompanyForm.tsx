@@ -63,7 +63,7 @@ const NewCompanyForm = ({ company }: { company: CompanyName }) => {
     validationSchema: companyValidationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await fetch('http://localhost:3001/api/v1/auth/companies/create', {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/auth/companies/create`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -98,7 +98,7 @@ const NewCompanyForm = ({ company }: { company: CompanyName }) => {
     validationSchema: RecruiterValidationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await fetch('http://localhost:3001/api/v1/auth/recruiter/createAccount/', {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/auth/recruiter/createAccount/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -119,7 +119,7 @@ const NewCompanyForm = ({ company }: { company: CompanyName }) => {
   const VerifyCompany = async()=>{
 
     try {
-       const response = await fetch('http://localhost:3001/api/v1/auth/companies/verifyCompany', {
+       const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/auth/companies/verifyCompany`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

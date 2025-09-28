@@ -87,7 +87,7 @@ const completionPercentage = ((completedFields/4)*100)
     const fetchQuestionDetail = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}&internshipId=${internshipId}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/question/questiondetail?difficulty=${difficulty}&internshipId=${internshipId}`
         );
 
         if (!response.ok) {

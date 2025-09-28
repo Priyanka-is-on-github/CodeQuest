@@ -20,7 +20,7 @@ const CompanySearch = ({ onCompanySelect }: any) => {
       const timer = setTimeout(async () => {
         setIsSearching(true);
         try {
-          const response = await fetch(`http://localhost:3001/api/v1/auth/companies/search?query=${encodeURIComponent(query)}`);
+          const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/auth/companies/search?query=${encodeURIComponent(query)}`);
           
             const {data} = await response.json()
 

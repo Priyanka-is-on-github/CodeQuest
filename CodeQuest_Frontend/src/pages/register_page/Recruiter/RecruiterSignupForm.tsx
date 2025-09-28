@@ -40,7 +40,7 @@ const RecruiterSignupForm = ({ company }: { company: CompanyName }) => {
     onSubmit: async (values) => {
       try {
         const response = await fetch(
-          "http://localhost:3001/api/v1/auth/recruiter/createAccount/",
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/auth/recruiter/createAccount/`,
           {
             method: "POST",
             headers: {

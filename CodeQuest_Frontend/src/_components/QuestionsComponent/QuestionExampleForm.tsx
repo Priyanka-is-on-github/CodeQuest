@@ -65,7 +65,7 @@ export default function QuestionExampleForm({
     try {
       setIsLoading(true);
       
-      const response = await fetch(`http://localhost:3001/api/v1/examples?questionId=${questionId}`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/examples?questionId=${questionId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ examples: data.examples }),
@@ -97,7 +97,7 @@ export default function QuestionExampleForm({
     if (exampleId) {
       // Delete existing example from backend
       const response = await fetch(
-        `http://localhost:3001/api/v1/examples?questionId=${questionId}&id=${exampleId}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/examples?questionId=${questionId}&id=${exampleId}`,
         {
           method: "DELETE",
         }

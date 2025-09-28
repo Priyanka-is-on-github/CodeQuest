@@ -68,7 +68,7 @@ const QuestionDescriptionForm = ({
     
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/question/questiondetail?difficulty=${difficulty}`,
          {
            method: "POST",
            headers: {

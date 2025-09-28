@@ -47,7 +47,7 @@ import toast from "react-hot-toast";
    
       try {
         const response = await fetch(
-          "http://localhost:3001/api/v1/internships/create",
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/internships/create`,
           {
             method: "POST",
             headers: {

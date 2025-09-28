@@ -55,7 +55,7 @@ export type NotificationType = {
     }
 
     // SSE connection
-    const es = new EventSource('http://localhost:3001/api/v1/notifications/stream', { withCredentials: true });
+    const es = new EventSource(`${import.meta.env.VITE_SERVER_URL}/api/v1/notifications/stream`, { withCredentials: true });
     esRef.current = es;
 
     es.addEventListener('notification', (e) => {
@@ -99,7 +99,7 @@ export type NotificationType = {
   // fetch unread count
   async function fetchUnreadCount() {
     try {
-      const res = await fetch(`http://localhost:3001/api/v1/notifications/unread-count?id=${user.id}`, { credentials: 'include' });
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/notifications/unread-count?id=${user.id}`, { credentials: 'include' });
       if (!res.ok) throw new Error('failed');
       const json = await res.json();
       setUnreadCount(Number(json.unreadCount || 0));
@@ -111,7 +111,7 @@ export type NotificationType = {
   // fetch recent notifications (for dropdown)
   async function fetchRecent() {
     try {
-      const res = await fetch(`http://localhost:3001/api/v1/notifications/recent?limit=${limit}&id=${encodeURIComponent(user.id)}`, { credentials: 'include' });
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/notifications/recent?limit=${limit}&id=${encodeURIComponent(user.id)}`, { credentials: 'include' });
       if (!res.ok) throw new Error('fetch failed');
       const json = await res.json();
 
@@ -138,7 +138,7 @@ export type NotificationType = {
   //   setList(prev => prev.map(i => i.recipientId === recipientId ? { ...i, readAt: new Date().toISOString() } : i));
   //   setUnreadCount(prev => Math.max(0, prev - 1));
   //   try {
-  //     const res = await fetch(`http://localhost:3001/api/v1/notifications/${recipientId}`, {
+  //     const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/notifications/${recipientId}`, {
   //       method: 'PATCH',
   //       headers: { 'Content-Type': 'application/json' },
   //       credentials: 'include',
@@ -165,7 +165,7 @@ export type NotificationType = {
     setUnreadCount(0);
 
     try {
-      const res = await fetch(`http://localhost:3001/api/v1/notifications/read-all?id=${user.id}`, {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/notifications/read-all?id=${user.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'

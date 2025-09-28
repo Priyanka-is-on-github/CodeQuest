@@ -15,7 +15,7 @@ function QuestionManagement() {
   const [updateButton, setUpdateButton] = useState<{difficulty:string, title:string, isPublished:boolean}[]>([]);
 const {setInternships} = useContext(InternshipContext)
 
-console.log('updatedbtn=', updateButton)
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 const navigate = useNavigate()
@@ -39,7 +39,7 @@ const navigate = useNavigate()
 
     try {
      const response =  await fetch(
-        `http://localhost:3001/api/v1/question?difficulty=${difficulty}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/question?difficulty=${difficulty}`,
         {
           method: "POST",
           headers: {
@@ -67,7 +67,7 @@ const navigate = useNavigate()
      
 
       const response = await fetch(
-        `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}&internshipId=${internshipId}`
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/question/questiondetail?difficulty=${difficulty}&internshipId=${internshipId}`
       );
 
       const questionId = await response.json();
@@ -92,7 +92,7 @@ const navigate = useNavigate()
         return;
       }
         const response = await fetch(
-          `http://localhost:3001/api/v1/question/get?internshipId=${internshipId}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/question/get?internshipId=${internshipId}`
         );
 
         const allQuestion = await response.json();

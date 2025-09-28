@@ -18,7 +18,7 @@ function InternshipInfoPage() {
     const fetchInternships = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/v1/internships/internshipid?id=${internshipId}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/internships/internshipid?id=${internshipId}`
         );
         const { data } = await response.json();
 

@@ -13,7 +13,7 @@ function AdminNavbar() {
       const fetchInternshipLogo = async () => {
        
         try {
-          const response = await fetch(`http://localhost:3001/api/v1/internships/getinternshipLogo?companyName=${encodeURIComponent(user.companyName)}`);
+          const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/internships/getinternshipLogo?companyName=${encodeURIComponent(user.companyName)}`);
           const {logo} = await response.json();
        
           console.log(logo)

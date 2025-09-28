@@ -29,7 +29,7 @@ function Compete() {
     const fetchInternships = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/v1/internships/publishinternships`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/internships/publishinternships`
         );
         const { data } = await response.json();
 

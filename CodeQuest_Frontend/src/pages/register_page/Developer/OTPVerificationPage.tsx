@@ -53,7 +53,7 @@ const {selectedRole} = useAuth()
 
     
     try {
-       await fetch('http://localhost:3001/api/v1/auth/resendCode', {
+       await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/auth/resendCode`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
@@ -97,7 +97,7 @@ const {selectedRole} = useAuth()
  
     
 try {
-   const response = await fetch('http://localhost:3001/api/v1/auth/verifyemail',{
+   const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/auth/verifyemail`,{
 
     method: 'POST',
     headers:{

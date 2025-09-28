@@ -38,7 +38,7 @@ function HandleUser() {
     const fetchApplicants = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/v1/developers/developer-form`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/developers/developer-form`
         );
         const { data } = await response.json();
         setApplicants(data);

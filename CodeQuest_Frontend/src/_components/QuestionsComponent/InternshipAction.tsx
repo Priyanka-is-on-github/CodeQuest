@@ -32,7 +32,7 @@ setInternships
  const navigate = useNavigate();
 // const { internships, setInternships } = useContext(InternshipContext);
 
-console.log('ispub=',ispublished)
+
   const [isLoading, setIsLoading] = useState(false);
 
    const onClick = async () => {
@@ -48,7 +48,7 @@ console.log('ispub=',ispublished)
      isPublished:false
    }
       const response =  await fetch(
-        `http://localhost:3001/api/v1/internships/putispublished`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/internships/putispublished`,
           {
             method: "POST",
             headers: {
@@ -81,7 +81,7 @@ console.log('ispub=',ispublished)
      isPublished:true
    }
       const response =  await fetch(
-          `http://localhost:3001/api/v1/internships/putispublished`,
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/internships/putispublished`,
           {
             method: "POST",
             headers: {
@@ -118,7 +118,7 @@ const result = await response.json();
     try {
       setIsLoading(true);
       await fetch(
-        `http://localhost:3001/api/v1/internships/deleteinternship?internshipId=${internshipId}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/internships/deleteinternship?internshipId=${internshipId}`,
         {
           method: "DELETE",
           headers: {

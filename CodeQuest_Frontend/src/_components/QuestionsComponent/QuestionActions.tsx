@@ -41,7 +41,7 @@ const QuestionActions = ({
      isPublished:false
    }
       const response =  await fetch(
-        `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/question/questiondetail?difficulty=${difficulty}`,
           {
             method: "POST",
             headers: {
@@ -74,7 +74,7 @@ const QuestionActions = ({
      isPublished:true
    }
       const response =  await fetch(
-          `http://localhost:3001/api/v1/question/questiondetail?difficulty=${difficulty}`,
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/question/questiondetail?difficulty=${difficulty}`,
           {
             method: "POST",
             headers: {
@@ -111,7 +111,7 @@ const QuestionActions = ({
     try {
       setIsLoading(true);
       await fetch(
-        `http://localhost:3001/api/v1/question/questiondelete?internshipId=${internshipId}&difficulty=${difficulty}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/question/questiondelete?internshipId=${internshipId}&difficulty=${difficulty}`,
         {
           method: "DELETE",
           headers: {

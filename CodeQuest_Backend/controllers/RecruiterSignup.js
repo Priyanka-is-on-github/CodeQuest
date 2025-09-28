@@ -1,6 +1,7 @@
-const RecruiterModel = require("../models/Recruiter");
+
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
+const RecruiterModel = require('../models/Recruiter');
 
 const RecruiterSignup = async(req, res)=>{
 
