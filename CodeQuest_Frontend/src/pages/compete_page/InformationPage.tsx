@@ -37,7 +37,7 @@ const InformationPage = () => {
                   enddate:internship?.endDateTime }
 
                try {
-                const response = await fetch('http://localhost:3001/api/v1/developers/developer-form',{
+                await fetch('http://localhost:3001/api/v1/developers/developer-form',{
                   method:'POST',
                   headers:{
                     'content-Type': "application/json"
@@ -136,7 +136,7 @@ const InformationPage = () => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
               >
-                {({ isSubmitting, setFieldValue }) => (
+                {({ isSubmitting }) => (
                   <Form>
                     <div className="space-y-6">
                       <div className="text-center mb-10">

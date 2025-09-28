@@ -3,7 +3,7 @@ const app = express();
 const connectToMongoDB = require('./connection')
 const AuthRouter = require('./routes/AuthRouter')
 const questionRouter = require('./routes/questionRouter')
-const createtestRouter = require('./routes/createtest')
+
 const exampleRouter = require('./routes/example')
 const testcaseRouter = require('./routes/testcaseRouter')
 const IntershipsRouter = require('./routes/IntershipsRouter')

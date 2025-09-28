@@ -3,7 +3,7 @@ import QuestionTitleForm from "@/_components/QuestionsComponent/QuestionTitleFor
 
 import { IconBadge } from "@/components/ui/icon-badge";
 import QuestionLayout from "@/layout/QuestionsLayout";
-import { ArrowLeft, BookOpenText, Eye, FileQuestion } from "lucide-react";
+import { ArrowLeft, BookOpenText, FileQuestion } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import QuestionActions from "@/_components/QuestionsComponent/QuestionActions";
 import QuestionExampleForm from "@/_components/QuestionsComponent/QuestionExampleForm";

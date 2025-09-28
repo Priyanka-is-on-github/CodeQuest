@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import Editor from './Editor'
 import Preview from'./Preview'

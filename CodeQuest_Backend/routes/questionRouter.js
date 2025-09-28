@@ -1,7 +1,7 @@
 const express = require("express");
 const Question = require("../models/question");
 const mongoose = require('mongoose');
-const { Types } = require('mongoose');
+
 const Example = require("../models/example");
 const TestCasesModel= require("../models/testcases");
 

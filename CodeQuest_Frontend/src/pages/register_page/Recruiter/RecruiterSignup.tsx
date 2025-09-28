@@ -1,4 +1,4 @@
-// pages/RecruiterSignup.tsx
+
 import { useState } from 'react';
 import CompanySearch from './CompanySearch';
 import RecruiterSignupForm from './RecruiterSignupForm';

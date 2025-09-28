@@ -48,7 +48,6 @@ function IntershipManagement() {
   const {user} = useAuth()
 
 
-console.log('inter=', internships)
 
 const upcomingInternships = internships.filter(internship => {
   return new Date(internship?.startDateTime) > new Date();

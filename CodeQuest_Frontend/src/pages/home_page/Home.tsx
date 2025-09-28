@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button'
+
 import { useAuth } from '@/context/AuthProvider'
 import Layout from '@/layout/Layout'
-import React from 'react'
+
 import {Link} from 'react-router-dom'
 
 function Home() {

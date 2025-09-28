@@ -1,17 +1,34 @@
 import Editor from '@monaco-editor/react';
 import { MoonIcon, SunIcon } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+// Type definitions
+type Language = 'javascript' | 'python' | 'java' | 'cpp';
+
+interface Example {
+  input: string;
+  output: string;
+  explanation: string;
+}
+
+interface Question {
+  id: number;
+  title: string;
+  description: string;
+  examples: Example[];
+  boilerplate: Record<Language, string>;
+}
+
 function ProblemPage() {
- const [darkMode, setDarkMode] = useState(false);
-  const [language, setLanguage] = useState('javascript');
+  const [darkMode, setDarkMode] = useState(false);
+  const [language, setLanguage] = useState<Language>('javascript');
   const [code, setCode] = useState('');
   const [output, setOutput] = useState('');
   const [isRunning, setIsRunning] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
-  const questions = [
+  const questions: Question[] = [
     {
       id: 1,
       title: "Count Triplets",
@@ -78,19 +95,16 @@ function ProblemPage() {
     }, 1500);
   };
 
-  const handleLanguageChange = (e: any) => {
-    setLanguage(e.target.value);
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLanguage(e.target.value as Language);
   };
 
-  const handleQuestionChange = (index: any) => {
+  const handleQuestionChange = (index: number) => {
     setCurrentQuestion(index);
   };
 
-  
-
- 
   return (
-     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       <header className={`shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">

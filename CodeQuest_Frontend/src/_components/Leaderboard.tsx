@@ -1,4 +1,4 @@
-import React from "react";
+
 import { IoPersonCircle } from "react-icons/io5";
 
 import { Progress } from "@/components/ui/progress";
@@ -9,7 +9,7 @@ type ProgressProps = {
   size?: "default" | "sm";
 };
 
-function Leaderboard({ value, variant, size }: ProgressProps) {
+function Leaderboard({ value, variant }: ProgressProps) {
   if (!variant) return;
 
   return (

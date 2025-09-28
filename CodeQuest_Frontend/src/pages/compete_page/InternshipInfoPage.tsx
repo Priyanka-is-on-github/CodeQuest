@@ -1,6 +1,6 @@
 import { useAuth } from "@/context/AuthProvider";
 import Layout from "@/layout/Layout";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { Internship } from "../intership_management";
 

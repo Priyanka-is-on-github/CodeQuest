@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 
 import toast from "react-hot-toast";
-import { Dispatch, SetStateAction, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ConfirmModal from "./ConfirmModel";
 
 

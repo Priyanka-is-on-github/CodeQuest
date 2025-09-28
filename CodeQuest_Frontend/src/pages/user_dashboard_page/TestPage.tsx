@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthProvider";
 import DashboardLayout from "@/layout/DashboardLayout";
-import Layout from "@/layout/Layout";
+
 import {
   AcademicCapIcon,
   BuildingLibraryIcon,
 } from "@heroicons/react/24/outline";
-import { CalendarIcon, ClockIcon, Link } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { CalendarIcon, ClockIcon} from "lucide-react";
+import  { useEffect, useState } from "react";
 import { IoPerson } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import { Internship } from "../intership_management";

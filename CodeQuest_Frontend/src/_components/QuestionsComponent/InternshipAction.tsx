@@ -5,8 +5,8 @@ import toast from "react-hot-toast";
 
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "./ConfirmModel";
-import { useContext, useState } from "react";
-import { Internship, InternshipContext } from "@/pages/intership_management";
+import {  useState } from "react";
+import { Internship } from "@/pages/intership_management";
 
 
 

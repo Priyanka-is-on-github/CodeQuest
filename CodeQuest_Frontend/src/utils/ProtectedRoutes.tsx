@@ -1,14 +1,14 @@
 import { useAuth } from "@/context/AuthProvider";
-import React, { ReactNode, useEffect } from "react";
+import  { ReactNode, useEffect } from "react";
 import toast from "react-hot-toast";
-import { useLocation, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 // Debounce function
 const debounce = <T extends (...args: any[]) => void>(
   func: T,
   delay: number
 ) => {
-  let timeoutId: number | null = null;
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
   return (...args: Parameters<T>) => {
     if (timeoutId) clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {

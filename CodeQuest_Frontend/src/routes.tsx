@@ -4,7 +4,7 @@ import Home from "./pages/home_page/Home";
 
 
 import Dashboard from "./pages/user_dashboard_page/Dashboard";
-import Admin from "./pages/admin_page/AdminDashboard";
+
 import QuestionManagement from "./pages/questions_management/QuestionManagement";
 
 import Question from "./pages/questions_management/Question";
@@ -12,7 +12,7 @@ import Question from "./pages/questions_management/Question";
 import Compete from "./pages/compete_page/Compete";
 import InformationPage from "./pages/compete_page/InformationPage";
 import TestPage from "./pages/user_dashboard_page/TestPage";
-import CodingProblem from "./pages/user_dashboard_page/CodingProblems";
+
 import CodingProblems from "./pages/user_dashboard_page/CodingProblems";
 import ProblemPage from "./pages/user_dashboard_page/ProblemPage";
 import AdminDashboard from "./pages/admin_page/AdminDashboard";
@@ -25,7 +25,7 @@ import InternshipInfoPage from "./pages/compete_page/InternshipInfoPage";
 import Authentication from "./pages/authentication";
 import OTPVerificationPage from "./pages/register_page/Developer/OTPVerificationPage";
 import RecruiterSignup from "./pages/register_page/Recruiter/RecruiterSignup";
-import { useAuth } from "./context/AuthProvider";
+
 import RecruiterSignin from "./pages/signin_page/RecruiterSignin";
 import HandleUser from "./pages/handle_page/HandleUser";
 import NotificationPage from "./pages/notification_page";

@@ -1,12 +1,12 @@
 import { useAuth } from "@/context/AuthProvider";
 import { IoPersonCircle } from "react-icons/io5";
 import Notification from "./Notification";
-import { useNavigate } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 
 function AdminNavbar() {
-  const { user, selectedRole } = useAuth();
-  const navigate = useNavigate();
+  const { user } = useAuth();
+  
    const [internshipLogo, setInternshipLogo] = useState('');
   
    useEffect(() => {

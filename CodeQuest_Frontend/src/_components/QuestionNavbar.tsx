@@ -1,19 +1,15 @@
 
-import { useLocation } from "react-router-dom";
+
 import Notification from "./Notification";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+
 import { useAuth } from "@/context/AuthProvider";
 import { IoPersonCircle } from "react-icons/io5";
 import { useEffect, useState } from "react";
 
 
 function QuestionNavbar() {
-  const { pathname } = useLocation();
-  const {user, selectedRole} = useAuth()
+
+  const {user} = useAuth()
   const [internshipLogo, setInternshipLogo] = useState('');
 
    useEffect(() => {

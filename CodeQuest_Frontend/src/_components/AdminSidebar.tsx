@@ -1,11 +1,9 @@
 import { useAuth } from '@/context/AuthProvider';
-import { Home, Layout, LogOut, Settings, TabletSmartphone, User2Icon } from 'lucide-react';
+import { Home, Layout, LogOut,  TabletSmartphone, User2Icon } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import { IoNotifications } from 'react-icons/io5';
-import { MdQuestionAnswer } from 'react-icons/md';
 
-import { PiQuestionMarkThin } from 'react-icons/pi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const routes = [

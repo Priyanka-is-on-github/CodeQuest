@@ -1,5 +1,5 @@
 import { useAuth } from '@/context/AuthProvider';
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -53,7 +53,7 @@ const {selectedRole} = useAuth()
 
     
     try {
-       const resendOtpResponse = await fetch('http://localhost:3001/api/v1/auth/resendCode', {
+       await fetch('http://localhost:3001/api/v1/auth/resendCode', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'

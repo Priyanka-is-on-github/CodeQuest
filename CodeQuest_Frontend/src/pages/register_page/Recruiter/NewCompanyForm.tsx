@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+
 import companyValidationSchema from '../schema/CompanyValidationSchema';
 import RecruiterValidationSchema from '../schema/RecruiterValidationSchema';
 import { useAuth } from '@/context/AuthProvider';

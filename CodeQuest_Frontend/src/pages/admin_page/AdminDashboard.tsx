@@ -1,10 +1,33 @@
-
-import  NewIntershipForm  from "@/_components/QuestionsComponent/NewInternshipForm";
-
+import NewIntershipForm from "@/_components/QuestionsComponent/NewInternshipForm";
 import AdminLayout from "@/layout/AdminLayout";
 import { BarChart, PieChart } from "lucide-react";
-
 import { Link } from "react-router-dom";
+
+// Type definitions
+interface StatCardProps {
+  title: string;
+  value: number;
+  icon: string;
+  color: string;
+  link: string;
+}
+
+interface QuickActionCardProps {
+  title: string;
+  description: string;
+  icon: string;
+  link: string;
+  color: string;
+}
+
+interface Activity {
+  id: number;
+  user: string;
+  action: string;
+  time: string;
+  score?: string;
+  icon?: string;
+}
 
 function AdminDashboard() {
   // Sample data - replace with actual data from your backend
@@ -15,13 +38,14 @@ function AdminDashboard() {
     pendingApplications: 28
   };
 
-  const recentActivities = [
+  const recentActivities: Activity[] = [
     { id: 1, user: 'Priyanka Kumari', action: 'completed Frontend test', time: '2 mins ago', score: '85%' },
     { id: 2, user: 'Rahul Sharma', action: 'applied for Backend internship', time: '15 mins ago' },
     { id: 3, user: 'Neha Patel', action: 'created new account', time: '1 hour ago' },
   ];
+
   return (
-   <AdminLayout>
+    <AdminLayout>
       <div className="p-6">
         {/* Header with Create Button */}
         <div className="flex justify-between items-center mb-8">
@@ -84,7 +108,7 @@ function AdminDashboard() {
             {recentActivities.map(activity => (
               <div key={activity.id} className="flex items-start p-3 hover:bg-gray-50 rounded-lg transition-colors">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
-                  {activity?.icon || '👤'}
+                  {activity.icon || '👤'}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900 truncate">
@@ -135,13 +159,13 @@ function AdminDashboard() {
 };
 
 // Reusable Stat Card Component
-const StatCard = ({ title, value, icon, color, link }) => (
+const StatCard = ({ title, value, icon, color, link }: StatCardProps) => (
   <Link to={link} className="transform hover:scale-105 transition-transform duration-200 ">
     <div className={`bg-gradient-to-r ${color} text-white p-6 rounded-xl shadow-lg`}>
       <div className="flex justify-between items-start">
         <div>
           <p className="text-sm font-medium opacity-80">{title}</p>
-          <p className="text-3xl font-bold mt-2">{value}</p>
+          <p className="text-3xl font-bold mt-2">{value.toLocaleString()}</p>
         </div>
         <span className="text-3xl">{icon}</span>
       </div>
@@ -153,7 +177,7 @@ const StatCard = ({ title, value, icon, color, link }) => (
 );
 
 // Reusable Quick Action Card Component
-const QuickActionCard = ({ title, description, icon, link, color }) => (
+const QuickActionCard = ({ title, description, icon, link, color }: QuickActionCardProps) => (
   <Link to={link} className="transform hover:scale-[1.02] transition-transform duration-200 ">
     <div className={`p-5 rounded-xl shadow-sm border ${color} border-transparent hover:border-current`}>
       <div className="flex items-center">
@@ -166,7 +190,5 @@ const QuickActionCard = ({ title, description, icon, link, color }) => (
     </div>
   </Link>
 );
-  
-
 
 export default AdminDashboard;

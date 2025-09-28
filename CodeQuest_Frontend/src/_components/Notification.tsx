@@ -18,7 +18,7 @@ import { formatDistanceToNow } from "date-fns";
 function Notification() {
   const { list, open, setOpen, fetchRecent, unreadCount, markAllReadOnOpen} = useNotifications({ limit: 4 });
 
-console.log('list=', list)
+
 
  async function onToggle() {
     if (!open) {

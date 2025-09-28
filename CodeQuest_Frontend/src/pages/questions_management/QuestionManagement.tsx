@@ -7,7 +7,7 @@ import {  useEffect, useState } from "react";
 import { Link, useLocation, useNavigate,  } from "react-router-dom";
 
 import InternshipAction from "@/_components/QuestionsComponent/InternshipAction";
-// import {htmlToText} from 'html-to-text';
+
 import { useContext } from "react";
 import { InternshipContext } from "@/pages/intership_management";
 

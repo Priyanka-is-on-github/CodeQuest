@@ -5,9 +5,9 @@ import { IoPersonOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { MdOutlineMail } from "react-icons/md";
 import { LiaGraduationCapSolid } from "react-icons/lia";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { HomeIcon, UniversityIcon, UserRound } from "lucide-react";
+import {  UniversityIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { useAuth } from "@/context/AuthProvider";
@@ -38,7 +38,7 @@ function DeveloperSignup() {
     useFormik({
       initialValues,
       validationSchema: DeveloperSignupSchema,
-      onSubmit: (values, action) => {
+      onSubmit: (_, action) => {
         
         action.resetForm();
       },

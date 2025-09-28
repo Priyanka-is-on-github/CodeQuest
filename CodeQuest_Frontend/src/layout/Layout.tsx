@@ -1,6 +1,6 @@
 import Footer from "@/_components/Footer";
 import Navbar from "@/_components/Navbar";
-import { useAuth } from "@/context/AuthProvider";
+
 import React from "react";
 import { Link } from "react-router-dom";
 

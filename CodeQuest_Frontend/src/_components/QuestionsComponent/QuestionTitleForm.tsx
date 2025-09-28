@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import toast from 'react-hot-toast';
 import { Input } from '@/components/ui/input';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 
